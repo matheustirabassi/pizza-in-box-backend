@@ -10,15 +10,13 @@ import com.matheustirabassi.cursomc.repositories.ProdutoRepository;
 
 @Service
 public class ProdutoService {
-	
-	
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
-	
+
 	public Produto find(Integer id) {
-		Optional <Produto> obj = produtoRepository.findById(id);
+		Optional<Produto> obj = produtoRepository.findById(id);
 		return obj.orElse(null);
-		
-		
+
 	}
 }
