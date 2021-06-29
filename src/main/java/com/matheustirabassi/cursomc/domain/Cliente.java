@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.matheustirabassi.cursomc.domain.enums.TipoCliente;
+
 @Entity
 public class Cliente implements Serializable {
 
@@ -26,15 +27,18 @@ public class Cliente implements Serializable {
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
-	private TipoCliente tipo;
-	
+	private Integer tipo;
 	@JsonManagedReference
 	@OneToMany(mappedBy = "cliente")
 	List<Endereco> enderecos = new ArrayList<>();
-	
+
 	@ElementCollection
 	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<>();
+
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+
 	public Cliente() {
 	}
 
@@ -43,7 +47,7 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo;
+		this.tipo = tipo.getCod();
 	}
 
 	public Integer getId() {
@@ -79,11 +83,11 @@ public class Cliente implements Serializable {
 	}
 
 	public TipoCliente getTipo() {
-		return TipoCliente.toEnum(tipo.getCod());
+		return TipoCliente.toEnum(tipo);
 	}
 
 	public void setTipo(TipoCliente tipo) {
-		this.tipo = tipo;
+		this.tipo = tipo.getCod();
 	}
 
 	public Set<String> getTelefones() {
@@ -100,6 +104,14 @@ public class Cliente implements Serializable {
 
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	@Override
