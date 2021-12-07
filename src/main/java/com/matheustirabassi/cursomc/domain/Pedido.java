@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "enderecoDeEntregaId")
 	private Endereco enderecoDeEntrega;
 
-	@OneToMany(mappedBy = "id.pedido")
+	@OneToMany(mappedBy = "id.pedido", fetch = FetchType.EAGER)
 	private Set<ItemPedido> itens = new HashSet<>();
 
 	public Pedido() {

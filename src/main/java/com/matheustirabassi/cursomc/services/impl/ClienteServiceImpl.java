@@ -33,10 +33,10 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
 	}
 
 	
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	protected GenericRepository<Cliente> getDAO() {
-		return (GenericRepository<Cliente>) clienteRepository;
+		return clienteRepository;
 	}
 
 }

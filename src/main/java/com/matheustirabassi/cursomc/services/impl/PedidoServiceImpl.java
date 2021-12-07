@@ -23,10 +23,9 @@ public class PedidoServiceImpl extends GenericServiceImpl<Pedido> implements Ped
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected GenericRepository<Pedido> getDAO() {
-		return (GenericRepository<Pedido>) pedidoRepository;
+		return pedidoRepository;
 	}
 
 }

@@ -24,10 +24,10 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto> implements P
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	protected GenericRepository<Produto> getDAO() {
-		return (GenericRepository<Produto>) produtoRepository;
+		return produtoRepository;
 	}
 
 	
