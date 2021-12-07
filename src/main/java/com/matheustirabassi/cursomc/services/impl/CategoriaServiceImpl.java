@@ -1,4 +1,4 @@
-package com.matheustirabassi.cursomc.services;
+package com.matheustirabassi.cursomc.services.impl;
 
 import java.util.Optional;
 
@@ -10,7 +10,7 @@ import com.matheustirabassi.cursomc.repositories.CategoriaRepository;
 import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class CategoriaService {
+public class CategoriaServiceImpl {
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
