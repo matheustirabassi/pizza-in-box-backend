@@ -10,7 +10,6 @@ import com.matheustirabassi.cursomc.domain.Cliente;
 import com.matheustirabassi.cursomc.repositories.ClienteRepository;
 import com.matheustirabassi.cursomc.repositories.GenericRepository;
 import com.matheustirabassi.cursomc.services.ClienteService;
-import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements ClienteService{
@@ -20,10 +19,9 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
 	@Autowired
 	private ClienteRepository clienteRepository;
 
-	public Cliente find(Integer id) {
-		Optional<Cliente> obj = clienteRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+	public Cliente findByNome(String nome) {
+		Optional<Cliente> obj = clienteRepository.findByNome(nome);
+		return obj.orElse(null);
 	}
 
 	@Override
@@ -31,8 +29,6 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 	
 	@Override
 	protected GenericRepository<Cliente> getDAO() {
