@@ -22,6 +22,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.matheustirabassi.cursomc.domain.enums.StatusPermissao;
 import com.matheustirabassi.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -35,11 +36,11 @@ public class Cliente implements Serializable {
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
-	@JsonIgnore
+	private Integer statusPermissao;
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@BatchSize(size = 1000)
 	List<Endereco> enderecos = new ArrayList<>();
-	
+
 	@ElementCollection
 	@CollectionTable(name = "telefone")
 	@Fetch(FetchMode.JOIN)
@@ -51,6 +52,7 @@ public class Cliente implements Serializable {
 	@JsonIgnore
 	@OneToOne
 	private Login login;
+
 	public Cliente() {
 	}
 
@@ -125,13 +127,17 @@ public class Cliente implements Serializable {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
-	
+
 	public Login getLogin() {
 		return login;
 	}
 
-	public void setLogin(Login login) {
-		this.login = login;
+	public StatusPermissao getStatusPermissao() {
+		return StatusPermissao.toEnum(statusPermissao);
+	}
+
+	public void setStatusPermissao(StatusPermissao statusPermissao) {
+		this.statusPermissao = statusPermissao.getCod();
 	}
 
 

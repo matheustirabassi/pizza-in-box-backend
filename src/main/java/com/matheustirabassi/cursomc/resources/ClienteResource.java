@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.matheustirabassi.cursomc.domain.Cliente;
-import com.matheustirabassi.cursomc.domain.Login;
 import com.matheustirabassi.cursomc.services.impl.ClienteServiceImpl;
 
 @RestController
