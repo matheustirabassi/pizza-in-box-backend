@@ -20,6 +20,7 @@ import com.matheustirabassi.cursomc.domain.PagamentoComCartao;
 import com.matheustirabassi.cursomc.domain.Pedido;
 import com.matheustirabassi.cursomc.domain.Produto;
 import com.matheustirabassi.cursomc.domain.enums.EstadoPagamento;
+import com.matheustirabassi.cursomc.domain.enums.StatusPermissao;
 import com.matheustirabassi.cursomc.domain.enums.TipoCliente;
 import com.matheustirabassi.cursomc.repositories.CategoriaRepository;
 import com.matheustirabassi.cursomc.repositories.CidadeRepository;
@@ -96,6 +97,7 @@ public class CursomcApplication implements CommandLineRunner {
 
 		Cliente cli1 = new Cliente(null, "Matheus", "tirabassi.matheus@aluno.ifsp.edu.br", "38384032810",
 				TipoCliente.PESSOAFISICA);
+		cli1.setStatusPermissao(StatusPermissao.ADMINISTRADOR);
 
 		cli1.getTelefones().addAll(Arrays.asList("15995125351", "15991097479"));
 
