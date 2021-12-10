@@ -33,6 +33,9 @@ import com.matheustirabassi.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
+	
+	
+	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 
