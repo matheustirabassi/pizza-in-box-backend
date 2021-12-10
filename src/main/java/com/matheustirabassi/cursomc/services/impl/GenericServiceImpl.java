@@ -28,7 +28,7 @@ public abstract class GenericServiceImpl<T> implements GenericService<T>, Serial
 	@Override
 	public T findById(Integer id) {
 		Optional<T> obj = getDAO().findById(id);
-		return obj.get();
+		return obj.orElse(null);
 	
 	}
 

@@ -1,4 +1,4 @@
-package com.matheustirabassi.cursomc;
+package com.matheustirabassi.cursomc.config;
 
 import java.util.Arrays;
 

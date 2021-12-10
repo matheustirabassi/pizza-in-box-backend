@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.matheustirabassi.cursomc.domain.Pedido;
-import com.matheustirabassi.cursomc.domain.Produto;
 import com.matheustirabassi.cursomc.services.impl.PedidoServiceImpl;
 
 @RestController

@@ -15,13 +15,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.matheustirabassi.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -35,7 +35,7 @@ public class Cliente implements Serializable {
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
-	@JsonManagedReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@BatchSize(size = 1000)
 	List<Endereco> enderecos = new ArrayList<>();
@@ -48,7 +48,9 @@ public class Cliente implements Serializable {
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
-
+	@JsonIgnore
+	@OneToOne
+	private Login login;
 	public Cliente() {
 	}
 
@@ -123,6 +125,15 @@ public class Cliente implements Serializable {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+	
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
 
 	@Override
 	public int hashCode() {
