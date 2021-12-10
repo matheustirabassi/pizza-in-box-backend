@@ -1,5 +1,7 @@
 package com.matheustirabassi.cursomc.resources;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,5 +23,10 @@ public class CategoriaResource {
 	public ResponseEntity<?> findById(@PathVariable Integer id) {
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	@GetMapping
+	public ResponseEntity<List<Categoria>> findAll(){
+		List<Categoria> categorias = service.findAll();
+		return ResponseEntity.ok().body(categorias);
 	}
 }

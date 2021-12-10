@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.matheustirabassi.cursomc.domain.Cliente;
+import com.matheustirabassi.cursomc.domain.Produto;
 import com.matheustirabassi.cursomc.services.impl.ClienteServiceImpl;
 
 @RestController
@@ -29,5 +30,10 @@ public class ClienteResource {
 	public ResponseEntity<?> findByName(@RequestParam String nome) {
 		List<Cliente> obj = service.findAll();
 		return ResponseEntity.ok().body(obj);
+	}
+	@GetMapping
+	public ResponseEntity<List<Cliente>> findAll(){
+		List<Cliente> clientes = service.findAll();
+		return ResponseEntity.ok().body(clientes);
 	}
 }
