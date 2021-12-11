@@ -39,7 +39,7 @@ public class ProdutoServiceImpl extends GenericServiceImpl<Produto> implements P
 	
 	@Override
 	public Produto fromDto(ProdutoDto dto) {
-		return new Produto(dto.getId(), dto.getNome(), dto.getPreco());
+		return new Produto(dto.getId(), dto.getNome(), dto.getPreco(), dto.getDescricao());
 }
 
 }
