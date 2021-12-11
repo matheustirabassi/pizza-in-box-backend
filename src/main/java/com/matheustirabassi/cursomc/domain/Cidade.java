@@ -2,6 +2,7 @@ package com.matheustirabassi.cursomc.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,8 +20,8 @@ public class Cidade implements Serializable {
 	private String nome;
 
 	
-	@ManyToOne
-	@JoinColumn(name = "estadoId")
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "estado_id")
 	private Estado estado;
 
 	public Cidade() {
