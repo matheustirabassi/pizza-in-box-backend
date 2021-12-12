@@ -19,19 +19,23 @@ public abstract class GenericServiceImpl<T> implements GenericService<T>, Serial
 	public void delete(T t) {
 		getDAO().delete(t);
 	}
+	@Override
+	public void deleteById(Integer id) {
+		getDAO().deleteById(id);
+	}
 
 	@Override
 	public List<T> findAll() {
 		return getDAO().findAll();
 	}
-
+	
 	@Override
 	public T findById(Integer id) {
 		Optional<T> obj = getDAO().findById(id);
 		return obj.orElse(null);
 	
 	}
-
+	
 	@Override
 	public T saveOrUpdate(T t) {
 		return getDAO().save(t);

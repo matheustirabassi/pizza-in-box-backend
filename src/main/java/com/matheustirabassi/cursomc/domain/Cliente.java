@@ -25,6 +25,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matheustirabassi.cursomc.domain.enums.StatusPermissao;
 import com.matheustirabassi.cursomc.domain.enums.TipoCliente;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 @Entity
 public class Cliente implements Serializable {
 
@@ -37,7 +44,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	private Integer statusPermissao;
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@BatchSize(size = 1000)
 	List<Endereco> enderecos = new ArrayList<>();
 
@@ -53,48 +60,29 @@ public class Cliente implements Serializable {
 	@OneToOne
 	private Login login;
 
-	public Cliente() {
-	}
-
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, Integer tipo, Integer statusPermissao,
+			Set<String> telefones) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod();
+		this.tipo = tipo;
+		this.statusPermissao = statusPermissao;
+		this.telefones = telefones;
 	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, Integer tipo, Integer statusPermissao,
+			Set<String> telefones, List<Endereco> enderecos) {
 		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
-	}
-
-	public void setCpfOuCnpj(String cpfOuCnpj) {
 		this.cpfOuCnpj = cpfOuCnpj;
+		this.tipo = tipo;
+		this.statusPermissao = statusPermissao;
+		this.telefones = telefones;
+		this.enderecos = enderecos;
 	}
+	
+	
 
 	public TipoCliente getTipo() {
 		return TipoCliente.toEnum(tipo);
@@ -102,34 +90,6 @@ public class Cliente implements Serializable {
 
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCod();
-	}
-
-	public Set<String> getTelefones() {
-		return telefones;
-	}
-
-	public void setTelefones(Set<String> telefones) {
-		this.telefones = telefones;
-	}
-
-	public List<Endereco> getEnderecos() {
-		return enderecos;
-	}
-
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
-
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
-	public Login getLogin() {
-		return login;
 	}
 
 	public StatusPermissao getStatusPermissao() {
@@ -141,35 +101,19 @@ public class Cliente implements Serializable {
 	}
 
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Cliente other = (Cliente) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+		this.id = id;
+		this.nome = nome;
+		this.email = email;
+		this.cpfOuCnpj = cpfOuCnpj;
+		this.tipo = tipo.getCod();
 	}
+	
 
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", email=" + email + ", cpfOuCnpj=" + cpfOuCnpj + ", tipo="
-				+ tipo + "]";
-	}
+
+	
+
+	
 
 }

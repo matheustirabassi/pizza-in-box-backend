@@ -13,4 +13,6 @@ public interface GenericService<T> {
 	public List<T> findByExample(T example, Integer start, Integer limit);
 
 	public List<T> findAll();
+
+	void deleteById(Integer id);
 }
