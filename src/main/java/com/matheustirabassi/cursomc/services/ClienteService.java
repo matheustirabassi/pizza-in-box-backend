@@ -15,4 +15,5 @@ public interface ClienteService extends GenericService<Cliente>{
 	public Page<ClienteDto> findAllWithPagination(Pageable pageable);
 	public List<Endereco> findByEnderecosWithClienteId(Integer id);
 	public Cliente insertEnderecoCliente(Integer id, EnderecoDto endereco);
+	public Cliente findByCpfOuCnpj(String text);
 }

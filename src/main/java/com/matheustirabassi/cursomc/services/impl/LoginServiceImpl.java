@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.matheustirabassi.cursomc.domain.Login;
+import com.matheustirabassi.cursomc.dto.LoginDto;
 import com.matheustirabassi.cursomc.repositories.GenericRepository;
 import com.matheustirabassi.cursomc.repositories.LoginRepository;
 import com.matheustirabassi.cursomc.services.LoginService;
@@ -39,5 +40,4 @@ public class LoginServiceImpl extends GenericServiceImpl<Login> implements Login
 	protected GenericRepository<Login> getDAO() {
 		return loginRepository;
 	}
-
 }

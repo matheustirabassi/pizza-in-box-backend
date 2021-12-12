@@ -20,12 +20,14 @@ public class LoginDto {
 	private String user;
 	private String password;
 	private Integer statusPermissao;
+	private Integer idCliente;
 
 	public LoginDto(Login login) {
 		id = login.getId();
 		user = login.getUser();
 		password = login.getPassword();
 		statusPermissao = login.getCliente().getStatusPermissao().getCod();
+		idCliente = login.getCliente().getId();
 	}
 
 	public static List<LoginDto> convertList(List<Login> logins) {

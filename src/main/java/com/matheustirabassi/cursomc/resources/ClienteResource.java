@@ -78,4 +78,10 @@ public class ClienteResource {
 		service.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping(value = "findByCpf")
+	public ResponseEntity<ClienteDto> findByCpf(@RequestParam String cpf){
+		ClienteDto dto = new ClienteDto(service.findByCpfOuCnpj(cpf));
+		return ResponseEntity.ok().body(dto);
+	}
 }
