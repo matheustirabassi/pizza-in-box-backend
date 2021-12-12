@@ -57,7 +57,7 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	private Login login;
 
 	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, Integer tipo, Integer statusPermissao,
