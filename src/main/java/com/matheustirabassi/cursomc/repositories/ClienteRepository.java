@@ -15,4 +15,6 @@ public interface ClienteRepository extends GenericRepository<Cliente> {
 	public Optional<Cliente> findByNome(String user);
 	@Query(value = "select u from Endereco as u where u.cliente.id = :id")
 	public List<Endereco> findByEnderecosWithClienteId(@Param("id") Integer id);
+	
+	public List<Cliente> findByCpfOuCnpj(String cpfOuCnpj);
 }

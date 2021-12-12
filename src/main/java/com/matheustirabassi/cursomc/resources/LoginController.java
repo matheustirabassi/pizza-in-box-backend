@@ -3,6 +3,8 @@ package com.matheustirabassi.cursomc.resources;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.matheustirabassi.cursomc.domain.Login;
+import com.matheustirabassi.cursomc.dto.LoginDto;
 import com.matheustirabassi.cursomc.services.LoginService;
 
 @RestController
@@ -35,17 +38,17 @@ public class LoginController {
 		Login obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-
+	@Transactional
 	@GetMapping
-	public ResponseEntity<List<Login>> findAll() {
-		List<Login> logins = service.findAll();
-		return ResponseEntity.ok().body(logins);
+	public ResponseEntity<List<LoginDto>> findAll() {
+		List<Login> logins = service.findAllWithCliente();
+		return ResponseEntity.ok().body(LoginDto.convertList(logins));
 	}
 
 	@PostMapping
-	public ResponseEntity<Login> insert(@RequestBody Login obj) {
-		obj.setPassword(getPasswordEncoder().encode(obj.getPassword()));
-		obj = service.saveOrUpdate(obj);
+	public ResponseEntity<LoginDto> insert(@RequestBody LoginDto obj) {
+		obj.setPassword(getPasswordEncoder().encode(obj.getPassword()));;
+		obj = service.saveLoginWithClienteId(obj, obj.getClienteId());
 		return ResponseEntity.ok(obj);
 	}
 

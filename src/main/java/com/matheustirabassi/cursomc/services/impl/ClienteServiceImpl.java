@@ -78,4 +78,9 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
 		return saveOrUpdate(obj);
 	}
 
+	@Override
+	public Cliente findByCpfOuCnpj(String text) {
+		return clienteRepository.findByCpfOuCnpj(text).get(0);
+	}
+
 }
