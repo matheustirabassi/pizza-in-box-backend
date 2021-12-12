@@ -8,9 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.matheustirabassi.cursomc.domain.Cidade;
 import com.matheustirabassi.cursomc.domain.Cliente;
 import com.matheustirabassi.cursomc.domain.Endereco;
+import com.matheustirabassi.cursomc.domain.Estado;
 import com.matheustirabassi.cursomc.dto.ClienteDto;
+import com.matheustirabassi.cursomc.dto.EnderecoDto;
 import com.matheustirabassi.cursomc.repositories.ClienteRepository;
 import com.matheustirabassi.cursomc.repositories.GenericRepository;
 import com.matheustirabassi.cursomc.services.ClienteService;
@@ -52,10 +55,27 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
 		return new Cliente(dto.getId(), dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(), dto.getTipo().getCod(),
 				dto.getStatusPermissao().getCod(), dto.getTelefones());
 	}
+	public Endereco fromEnderecoDto(EnderecoDto enderecoDto) {
+		Cidade cidade = new Cidade(null, enderecoDto.getCidade(), null);
+		Estado estado = new Estado(null, enderecoDto.getEstado());
+		cidade.setEstado(estado);
+		estado.getCidades().add(cidade);
+		return new Endereco(null, enderecoDto.getLogradouro(), enderecoDto.getNumero(),
+				enderecoDto.getComplemento(), enderecoDto.getBairro(), enderecoDto.getCep(), cidade, null);
+	}
 
 	@Override
 	public List<Endereco> findByEnderecosWithClienteId(Integer id) {
 		return clienteRepository.findByEnderecosWithClienteId(id);
+	}
+
+	@Override
+	public Cliente insertEnderecoCliente(Integer id, EnderecoDto enderecoDto) {
+		Cliente obj = findById(id);
+		Endereco endereco = fromEnderecoDto(enderecoDto);
+		endereco.setCliente(obj);
+		obj.getEnderecos().add(endereco);
+		return saveOrUpdate(obj);
 	}
 
 }

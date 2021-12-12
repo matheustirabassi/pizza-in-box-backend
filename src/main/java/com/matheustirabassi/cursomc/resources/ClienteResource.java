@@ -61,15 +61,7 @@ public class ClienteResource {
 	@Transactional
 	@PostMapping(value = "{id}/enderecos")
 	public ResponseEntity<?> insertEndereco(@PathVariable Integer id, @RequestBody EnderecoDto enderecoDto) {
-		Cliente obj = service.findById(id);
-		Cidade cidade = new Cidade(null, enderecoDto.getCidade(), null);
-		Estado estado = new Estado(null, enderecoDto.getEstado());
-		cidade.setEstado(estado);
-		estado.getCidades().add(cidade);
-		Endereco endereco = new Endereco(null, enderecoDto.getLogradouro(), enderecoDto.getNumero(),
-				enderecoDto.getComplemento(), enderecoDto.getBairro(), enderecoDto.getCep(), cidade, obj);
-		obj.getEnderecos().add(endereco);
-		service.saveOrUpdate(obj);
+		Cliente obj = service.insertEnderecoCliente(id, enderecoDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
