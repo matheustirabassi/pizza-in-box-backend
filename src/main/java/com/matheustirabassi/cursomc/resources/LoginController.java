@@ -50,9 +50,10 @@ public class LoginController {
 	}
 
 	@GetMapping("/passwordValidate")
-	public ResponseEntity<Boolean> passwordValidate(@RequestParam String user, @RequestParam String password) {
+	public ResponseEntity<?> passwordValidate(@RequestParam String user, @RequestParam String password) {
 
 		Optional<Login> obj = Optional.ofNullable(service.findByLogin(user));
+		System.out.println(obj);
 		if (obj.isEmpty()) {
 			log.error("User UNAUTHORIZED!!!");
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
@@ -61,7 +62,11 @@ public class LoginController {
 		valid = getPasswordEncoder().matches(password, obj.get().getPassword());
 
 		HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-		return ResponseEntity.status(status).body(valid);
+		if(!valid) {
+			return ResponseEntity.status(status).body(valid);
+		}
+		Login login = obj.get();
+		return ResponseEntity.status(status).body(login.getCliente().getStatusPermissao());
 
 	}
 
