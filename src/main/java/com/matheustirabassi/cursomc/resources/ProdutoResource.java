@@ -1,7 +1,6 @@
 package com.matheustirabassi.cursomc.resources;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,39 +24,44 @@ import com.matheustirabassi.cursomc.services.impl.ProdutoServiceImpl;
 @RequestMapping(value = "/produtos")
 public class ProdutoResource {
 
-	@Autowired
-	private ProdutoServiceImpl service;
+  @Autowired
+  private ProdutoServiceImpl service;
 
-	@GetMapping(value = "{id}")
-	public ResponseEntity<?> findById(@PathVariable Integer id) {
-		Produto obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
-	}
-	@GetMapping
-	public ResponseEntity<Page<ProdutoDto>> findAll(Pageable pageable){
-		Page<ProdutoDto> list = service.findAllWithPagination(pageable);
-		return ResponseEntity.ok(list);
-	}
-	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody ProdutoDto produtoDto) {
-		Produto obj = service.fromDto(produtoDto);
-		obj = service.saveOrUpdate(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).build();
-	}
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@RequestBody ProdutoDto objDTO, @PathVariable Integer id) {
-		Produto obj = service.fromDto(objDTO);
-		obj.setId(id);
-		obj = service.saveOrUpdate(obj);
-		return ResponseEntity.noContent().build();
+  @GetMapping(value = "{id}")
+  public ResponseEntity<?> findById(@PathVariable Integer id) {
+    Produto obj = service.findById(id);
+    return ResponseEntity.ok().body(obj);
+  }
 
-	}
-	
-	@DeleteMapping(value = "{id}")
-	public ResponseEntity<Void> deleteProdutoById(@PathVariable Integer id){
-		service.deleteById(id);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
-		return ResponseEntity.created(uri).build();
-	}
+  @GetMapping
+  public ResponseEntity<Page<ProdutoDto>> findAll(Pageable pageable) {
+    Page<ProdutoDto> list = service.findAllWithPagination(pageable);
+    return ResponseEntity.ok(list);
+  }
+
+  @PostMapping
+  public ResponseEntity<Void> insert(@RequestBody ProdutoDto produtoDto) {
+    Produto obj = service.fromDto(produtoDto);
+    obj = service.saveOrUpdate(obj);
+    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+        .buildAndExpand(obj.getId()).toUri();
+    return ResponseEntity.created(uri).build();
+  }
+
+  @PutMapping(value = "/{id}")
+  public ResponseEntity<Void> update(@RequestBody ProdutoDto objDTO, @PathVariable Integer id) {
+    Produto obj = service.fromDto(objDTO);
+    obj.setId(id);
+    obj = service.saveOrUpdate(obj);
+    return ResponseEntity.noContent().build();
+
+  }
+
+  @DeleteMapping(value = "{id}")
+  public ResponseEntity<Void> deleteProdutoById(@PathVariable Integer id) {
+    service.deleteById(id);
+    URI uri =
+        ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+    return ResponseEntity.created(uri).build();
+  }
 }

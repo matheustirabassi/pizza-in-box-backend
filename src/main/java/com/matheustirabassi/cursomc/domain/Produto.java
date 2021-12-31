@@ -27,36 +27,37 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Produto implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String nome;
-	private Double preco;
-	private String descricao;
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+  private String nome;
+  private Double preco;
+  private String descricao;
 
-	@JsonIgnore
-	@ManyToMany
-	@JoinTable(name = "ProdutoCategoria", joinColumns = @JoinColumn(name = "produtoId"), inverseJoinColumns = @JoinColumn(name = "categoriaId"))
-	private List<Categoria> categorias = new ArrayList<>();
-	@JsonIgnore
-	@OneToMany(mappedBy = "id.produto")
-	private Set<ItemPedido> itens = new HashSet<>();
+  @JsonIgnore
+  @ManyToMany
+  @JoinTable(name = "ProdutoCategoria", joinColumns = @JoinColumn(name = "produtoId"),
+      inverseJoinColumns = @JoinColumn(name = "categoriaId"))
+  private List<Categoria> categorias = new ArrayList<>();
+  @JsonIgnore
+  @OneToMany(mappedBy = "id.produto")
+  private Set<ItemPedido> itens = new HashSet<>();
 
-	public Produto(Integer id, String nome, Double preco, String descricao) {
-		this.id = id;
-		this.nome = nome;
-		this.preco = preco;
-		this.descricao = descricao;
-	}
+  public Produto(Integer id, String nome, Double preco, String descricao) {
+    this.id = id;
+    this.nome = nome;
+    this.preco = preco;
+    this.descricao = descricao;
+  }
 
-	@JsonIgnore
-	public List<Pedido> getPedidos() {
-		List<Pedido> lista = new ArrayList<>();
-		for (ItemPedido x : itens) {
-			lista.add(x.getPedido());
-		}
-		return lista;
-	}
+  @JsonIgnore
+  public List<Pedido> getPedidos() {
+    List<Pedido> lista = new ArrayList<>();
+    for (ItemPedido x : itens) {
+      lista.add(x.getPedido());
+    }
+    return lista;
+  }
 
 }

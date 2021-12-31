@@ -10,10 +10,14 @@ import com.matheustirabassi.cursomc.domain.Endereco;
 import com.matheustirabassi.cursomc.dto.ClienteDto;
 import com.matheustirabassi.cursomc.dto.EnderecoDto;
 
-public interface ClienteService extends GenericService<Cliente>{
-	public Cliente fromDto(ClienteDto dto);
-	public Page<ClienteDto> findAllWithPagination(Pageable pageable);
-	public List<Endereco> findByEnderecosWithClienteId(Integer id);
-	public Cliente insertEnderecoCliente(Integer id, EnderecoDto endereco);
-	public Cliente findByCpfOuCnpj(String text);
+public interface ClienteService extends GenericService<Cliente> {
+  public Cliente fromDto(ClienteDto dto);
+
+  public Page<ClienteDto> findAllWithPagination(Pageable pageable);
+
+  public List<Endereco> findByEnderecosWithClienteId(Integer id);
+
+  public Cliente insertEnderecoCliente(Integer id, EnderecoDto endereco);
+
+  public Cliente findByCpfOuCnpj(String text);
 }

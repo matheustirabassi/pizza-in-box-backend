@@ -19,20 +19,20 @@ import lombok.NoArgsConstructor;
 @Data
 public class PedidoDto {
 
-	private Integer id;
-	private Date instante;
-	private Endereco enderecoDeEntrega;
-	private Set<ItemPedido> itens = new HashSet<>();
+  private Integer id;
+  private Date instante;
+  private Endereco enderecoDeEntrega;
+  private Set<ItemPedido> itens = new HashSet<>();
 
-	public PedidoDto(Pedido pedido) {
-		this.id = pedido.getId();
-		this.instante = pedido.getInstante();
-		this.enderecoDeEntrega = pedido.getEnderecoDeEntrega();
-		this.itens = pedido.getItens();
-	}
-	
-	public static List<PedidoDto> convert(List<Pedido> pedidos){
-		return pedidos.stream().map(PedidoDto::new).collect(Collectors.toList());
-		
-	}
+  public PedidoDto(Pedido pedido) {
+    this.id = pedido.getId();
+    this.instante = pedido.getInstante();
+    this.enderecoDeEntrega = pedido.getEnderecoDeEntrega();
+    this.itens = pedido.getItens();
+  }
+
+  public static List<PedidoDto> convert(List<Pedido> pedidos) {
+    return pedidos.stream().map(PedidoDto::new).collect(Collectors.toList());
+
+  }
 }

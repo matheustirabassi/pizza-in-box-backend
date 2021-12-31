@@ -10,10 +10,10 @@ import com.matheustirabassi.cursomc.domain.Login;
 
 @Repository
 public interface LoginRepository extends GenericRepository<Login> {
-	@Query(value = "select u from Login u JOIN FETCH u.cliente v where u.user = :user")
-	public Optional<Login> findByUser(String user);
-	
-	
-	@Query(value = "select u from Login u JOIN FETCH u.cliente v")
-	public List<Login> findAllWithCliente();
+  @Query(value = "select u from Login u JOIN FETCH u.cliente v where u.user = :user")
+  public Optional<Login> findByUser(String user);
+
+
+  @Query(value = "select u from Login u JOIN FETCH u.cliente v")
+  public List<Login> findAllWithCliente();
 }

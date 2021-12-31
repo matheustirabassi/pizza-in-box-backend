@@ -22,22 +22,22 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Endereco implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	private String logradouro;
-	private String numero;
-	private String complemento;
-	private String bairro;
-	private String cep;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "cidade_id")
-	private Cidade cidade;
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+  private String logradouro;
+  private String numero;
+  private String complemento;
+  private String bairro;
+  private String cep;
+  @ManyToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "cidade_id")
+  private Cidade cidade;
 
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
+  @JsonIgnore
+  @ManyToOne
+  @JoinColumn(name = "cliente_id")
+  private Cliente cliente;
 
 }

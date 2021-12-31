@@ -13,28 +13,29 @@ import com.matheustirabassi.cursomc.services.CategoriaService;
 import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
-public class CategoriaServiceImpl extends GenericServiceImpl<Categoria> implements CategoriaService{
+public class CategoriaServiceImpl extends GenericServiceImpl<Categoria>
+    implements CategoriaService {
 
-	private static final long serialVersionUID = 1L;
-	
-	@Autowired
-	 private transient CategoriaRepository categoriaRepository;
+  private static final long serialVersionUID = 1L;
 
-	public Categoria find(Integer id) {
-		Optional<Categoria> obj = categoriaRepository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
-	}
+  @Autowired
+  private transient CategoriaRepository categoriaRepository;
 
-	@Override
-	public List<Categoria> findByExample(Categoria example, Integer start, Integer limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  public Categoria find(Integer id) {
+    Optional<Categoria> obj = categoriaRepository.findById(id);
+    return obj.orElseThrow(() -> new ObjectNotFoundException(
+        "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+  }
 
-	@Override
-	protected GenericRepository<Categoria> getDAO() {
-		return categoriaRepository;
-	}
+  @Override
+  public List<Categoria> findByExample(Categoria example, Integer start, Integer limit) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  protected GenericRepository<Categoria> getDAO() {
+    return categoriaRepository;
+  }
 
 }

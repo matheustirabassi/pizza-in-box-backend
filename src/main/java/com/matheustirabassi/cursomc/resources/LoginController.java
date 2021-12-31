@@ -28,53 +28,55 @@ import com.matheustirabassi.cursomc.services.LoginService;
 @RequestMapping(value = "/logins")
 public class LoginController {
 
-	Logger log = Logger.getLogger(LoginController.class);
+  Logger log = Logger.getLogger(LoginController.class);
 
-	@Autowired
-	private LoginService service;
+  @Autowired
+  private LoginService service;
 
-	@GetMapping(value = "{id}")
-	public ResponseEntity<Login> findById(@PathVariable Integer id) {
-		Login obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
-	}
-	@Transactional
-	@GetMapping
-	public ResponseEntity<List<LoginDto>> findAll() {
-		List<Login> logins = service.findAllWithCliente();
-		return ResponseEntity.ok().body(LoginDto.convertList(logins));
-	}
+  @GetMapping(value = "{id}")
+  public ResponseEntity<Login> findById(@PathVariable Integer id) {
+    Login obj = service.findById(id);
+    return ResponseEntity.ok().body(obj);
+  }
 
-	@PostMapping
-	public ResponseEntity<LoginDto> insert(@RequestBody LoginDto obj) {
-		obj.setPassword(getPasswordEncoder().encode(obj.getPassword()));;
-		obj = service.saveLoginWithClienteId(obj, obj.getClienteId());
-		return ResponseEntity.ok(obj);
-	}
+  @Transactional
+  @GetMapping
+  public ResponseEntity<List<LoginDto>> findAll() {
+    List<Login> logins = service.findAllWithCliente();
+    return ResponseEntity.ok().body(LoginDto.convertList(logins));
+  }
 
-	@GetMapping("/passwordValidate")
-	public ResponseEntity<?> passwordValidate(@RequestParam String user, @RequestParam String password) {
+  @PostMapping
+  public ResponseEntity<LoginDto> insert(@RequestBody LoginDto obj) {
+    obj.setPassword(getPasswordEncoder().encode(obj.getPassword()));;
+    obj = service.saveLoginWithClienteId(obj, obj.getClienteId());
+    return ResponseEntity.ok(obj);
+  }
 
-		Optional<Login> obj = Optional.ofNullable(service.findByLogin(user));
-		System.out.println(obj);
-		if (obj.isEmpty()) {
-			log.error("User UNAUTHORIZED!!!");
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
-		}
-		boolean valid = false;
-		valid = getPasswordEncoder().matches(password, obj.get().getPassword());
+  @GetMapping("/passwordValidate")
+  public ResponseEntity<?> passwordValidate(@RequestParam String user,
+      @RequestParam String password) {
 
-		HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-		if(!valid) {
-			return ResponseEntity.status(status).body(valid);
-		}
-		Login login = obj.get();
-		return ResponseEntity.status(status).body(login.getCliente().getStatusPermissao());
+    Optional<Login> obj = Optional.ofNullable(service.findByLogin(user));
+    System.out.println(obj);
+    if (obj.isEmpty()) {
+      log.error("User UNAUTHORIZED!!!");
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(false);
+    }
+    boolean valid = false;
+    valid = getPasswordEncoder().matches(password, obj.get().getPassword());
 
-	}
+    HttpStatus status = (valid) ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+    if (!valid) {
+      return ResponseEntity.status(status).body(valid);
+    }
+    Login login = obj.get();
+    return ResponseEntity.status(status).body(login.getCliente().getStatusPermissao());
 
-	@Bean
-	public PasswordEncoder getPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+  }
+
+  @Bean
+  public PasswordEncoder getPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 }

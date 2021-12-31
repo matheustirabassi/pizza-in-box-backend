@@ -16,17 +16,18 @@ import com.matheustirabassi.cursomc.services.impl.CategoriaServiceImpl;
 @RequestMapping(value = "/categorias")
 public class CategoriaResource {
 
-	@Autowired
-	private CategoriaServiceImpl service;
+  @Autowired
+  private CategoriaServiceImpl service;
 
-	@GetMapping(value = "{id}")
-	public ResponseEntity<?> findById(@PathVariable Integer id) {
-		Categoria obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
-	}
-	@GetMapping
-	public ResponseEntity<List<Categoria>> findAll(){
-		List<Categoria> categorias = service.findAll();
-		return ResponseEntity.ok().body(categorias);
-	}
+  @GetMapping(value = "{id}")
+  public ResponseEntity<?> findById(@PathVariable Integer id) {
+    Categoria obj = service.find(id);
+    return ResponseEntity.ok().body(obj);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<Categoria>> findAll() {
+    List<Categoria> categorias = service.findAll();
+    return ResponseEntity.ok().body(categorias);
+  }
 }

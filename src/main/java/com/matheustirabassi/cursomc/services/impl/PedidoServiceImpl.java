@@ -11,21 +11,21 @@ import com.matheustirabassi.cursomc.repositories.PedidoRepository;
 import com.matheustirabassi.cursomc.services.PedidoService;
 
 @Service
-public class PedidoServiceImpl extends GenericServiceImpl<Pedido> implements PedidoService{
+public class PedidoServiceImpl extends GenericServiceImpl<Pedido> implements PedidoService {
 
-	private static final long serialVersionUID = 1L;
-	@Autowired
-	private PedidoRepository pedidoRepository;
+  private static final long serialVersionUID = 1L;
+  @Autowired
+  private PedidoRepository pedidoRepository;
 
-	@Override
-	public List<Pedido> findByExample(Pedido example, Integer start, Integer limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+  @Override
+  public List<Pedido> findByExample(Pedido example, Integer start, Integer limit) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 
-	@Override
-	protected GenericRepository<Pedido> getDAO() {
-		return pedidoRepository;
-	}
+  @Override
+  protected GenericRepository<Pedido> getDAO() {
+    return pedidoRepository;
+  }
 
 }

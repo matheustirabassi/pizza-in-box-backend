@@ -1,34 +1,34 @@
 package com.matheustirabassi.cursomc.domain.enums;
 
 public enum EstadoPagamento {
-	
-	PENDENTE(1, "Pendente"), QUITADO(2, "Quitado"), CANCELADO(3, "Cancelado");
 
-	private int cod;
-	private String descricao;
+  PENDENTE(1, "Pendente"), QUITADO(2, "Quitado"), CANCELADO(3, "Cancelado");
 
-	private EstadoPagamento(int cod, String descricao) {
-		this.cod = cod;
-		this.descricao = descricao;
-	}
+  private int cod;
+  private String descricao;
 
-	public int getCod() {
-		return cod;
-	}
+  private EstadoPagamento(int cod, String descricao) {
+    this.cod = cod;
+    this.descricao = descricao;
+  }
 
-	public String getDescricao() {
-		return descricao;
-	}
+  public static EstadoPagamento toEnum(Integer tipo) {
+    if (tipo == null) {
+      return null;
+    }
+    for (EstadoPagamento x : EstadoPagamento.values()) {
+      if (tipo.equals(x.getCod())) {
+        return x;
+      }
+    }
+    throw new IllegalArgumentException("Id inválido: " + tipo);
+  }
 
-	public static EstadoPagamento toEnum(Integer tipo) {
-		if (tipo == null) {
-			return null;
-		}
-		for (EstadoPagamento x : EstadoPagamento.values()) {
-			if (tipo.equals(x.getCod())) {
-				return x;
-			}
-		}
-		throw new IllegalArgumentException("Id inválido: " + tipo);
-	}
+  public int getCod() {
+    return cod;
+  }
+
+  public String getDescricao() {
+    return descricao;
+  }
 }
