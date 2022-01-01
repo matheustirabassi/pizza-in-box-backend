@@ -10,6 +10,8 @@ import com.matheustirabassi.cursomc.domain.Endereco;
 import com.matheustirabassi.cursomc.dto.ClienteDto;
 import com.matheustirabassi.cursomc.dto.EnderecoDto;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 public interface ClienteService extends GenericService<Cliente> {
   public Cliente fromDto(ClienteDto dto);
 
@@ -19,5 +21,5 @@ public interface ClienteService extends GenericService<Cliente> {
 
   public Cliente insertEnderecoCliente(Integer id, EnderecoDto endereco);
 
-  public Cliente findByCpfOuCnpj(String text);
+  public Cliente findByCpfOuCnpj(String text) throws ObjectNotFoundException;
 }

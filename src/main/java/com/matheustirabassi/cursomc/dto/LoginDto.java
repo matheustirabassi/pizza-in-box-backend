@@ -1,5 +1,6 @@
 package com.matheustirabassi.cursomc.dto;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,20 +16,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class LoginDto {
+public class LoginDto implements Serializable {
+  private static final long serialVersionUID = 1L;
   private Integer id;
   @Column(unique = true)
   private String user;
   private String password;
   private Integer statusPermissao;
-  private Integer clienteId;
 
   public LoginDto(Login login) {
     id = login.getId();
     user = login.getUser();
     password = login.getPassword();
     statusPermissao = login.getCliente().getStatusPermissao().getCod();
-    clienteId = login.getCliente().getId();
   }
 
   public static List<LoginDto> convertList(List<Login> logins) {

@@ -1,4 +1,4 @@
-package com.matheustirabassi.cursomc.resources;
+package com.matheustirabassi.cursomc.controllers;
 
 import java.net.URI;
 

@@ -1,5 +1,6 @@
 package com.matheustirabassi.cursomc.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PedidoDto {
+public class PedidoDto implements Serializable {
+  private static final long serialVersionUID = 1L;
 
   private Integer id;
   private Date instante;

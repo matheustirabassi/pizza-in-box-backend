@@ -1,14 +1,20 @@
-package com.matheustirabassi.cursomc.resources;
+package com.matheustirabassi.cursomc.controllers;
 
+import com.matheustirabassi.cursomc.domain.Cliente;
+import com.matheustirabassi.cursomc.domain.Endereco;
+import com.matheustirabassi.cursomc.dto.ClienteDto;
+import com.matheustirabassi.cursomc.dto.EnderecoDto;
+import com.matheustirabassi.cursomc.services.ClienteService;
 import java.net.URI;
 import java.util.List;
-
+import javassist.tools.rmi.ObjectNotFoundException;
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,18 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.matheustirabassi.cursomc.domain.Cliente;
-import com.matheustirabassi.cursomc.domain.Endereco;
-import com.matheustirabassi.cursomc.dto.ClienteDto;
-import com.matheustirabassi.cursomc.dto.EnderecoDto;
-import com.matheustirabassi.cursomc.services.impl.ClienteServiceImpl;
-
 @RestController
 @RequestMapping(value = "/clientes")
-public class ClienteResource {
+public class ClienteController {
 
   @Autowired
-  private ClienteServiceImpl service;
+  private ClienteService service;
+
 
   @GetMapping(value = "{id}")
   public ResponseEntity<ClienteDto> findById(@PathVariable Integer id) {
@@ -51,11 +52,15 @@ public class ClienteResource {
 
   @PostMapping
   public ResponseEntity<?> insert(@RequestBody ClienteDto clienteDto) {
-    clienteDto.setId(null);
+    System.out.println(clienteDto.getLogin().getPassword());
+    String clientePassword = clienteDto.getLogin().getPassword();
+    clienteDto.getLogin().setPassword(getPasswordEncoder().encode(clientePassword));
+
     Cliente obj = service.saveOrUpdate(service.fromDto(clienteDto));
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(obj.getId()).toUri();
-    return ResponseEntity.created(uri).build().ok().body(obj.getId());
+    return ResponseEntity.created(uri).build();
+
   }
 
   @Transactional
@@ -82,8 +87,13 @@ public class ClienteResource {
   }
 
   @GetMapping(value = "findByCpf")
-  public ResponseEntity<ClienteDto> findByCpf(@RequestParam String cpf) {
+  public ResponseEntity<ClienteDto> findByCpf(@RequestParam String cpf)
+      throws ObjectNotFoundException {
     ClienteDto dto = new ClienteDto(service.findByCpfOuCnpj(cpf));
     return ResponseEntity.ok().body(dto);
+  }
+
+  public PasswordEncoder getPasswordEncoder() {
+    return new BCryptPasswordEncoder();
   }
 }

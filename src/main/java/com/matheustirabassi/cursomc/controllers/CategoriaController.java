@@ -1,4 +1,4 @@
-package com.matheustirabassi.cursomc.resources;
+package com.matheustirabassi.cursomc.controllers;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import com.matheustirabassi.cursomc.services.impl.CategoriaServiceImpl;
 
 @RestController
 @RequestMapping(value = "/categorias")
-public class CategoriaResource {
+public class CategoriaController {
 
   @Autowired
   private CategoriaServiceImpl service;
