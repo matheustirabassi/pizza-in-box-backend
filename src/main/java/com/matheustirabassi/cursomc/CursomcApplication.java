@@ -1,10 +1,5 @@
 package com.matheustirabassi.cursomc;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import com.matheustirabassi.cursomc.repositories.CategoriaRepository;
 import com.matheustirabassi.cursomc.repositories.CidadeRepository;
 import com.matheustirabassi.cursomc.repositories.ClienteRepository;
@@ -14,7 +9,14 @@ import com.matheustirabassi.cursomc.repositories.ItemPedidoRepository;
 import com.matheustirabassi.cursomc.repositories.PagamentoRepository;
 import com.matheustirabassi.cursomc.repositories.PedidoRepository;
 import com.matheustirabassi.cursomc.repositories.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Executa o springboot.
+ */
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
 
@@ -43,6 +45,7 @@ public class CursomcApplication implements CommandLineRunner {
   }
 
   @Override
-  public void run(String... args) throws Exception {}
+  public void run(String... args) throws Exception {
+  }
 
 }

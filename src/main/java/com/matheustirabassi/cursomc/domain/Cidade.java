@@ -11,6 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe de cidade para cliente.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

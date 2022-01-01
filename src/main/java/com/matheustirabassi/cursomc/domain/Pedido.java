@@ -1,10 +1,10 @@
 package com.matheustirabassi.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,8 +18,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
+/**
+ * Classe de pedido para os produtos
+ */
 @Entity
 public class Pedido implements Serializable {
 
@@ -47,7 +48,8 @@ public class Pedido implements Serializable {
   @OneToMany(mappedBy = "id.pedido", fetch = FetchType.EAGER)
   private Set<ItemPedido> itens = new HashSet<>();
 
-  public Pedido() {}
+  public Pedido() {
+  }
 
   public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
     this.id = id;
@@ -114,18 +116,23 @@ public class Pedido implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Pedido other = (Pedido) obj;
     if (id == null) {
-      if (other.id != null)
+      if (other.id != null) {
         return false;
-    } else if (!id.equals(other.id))
+      }
+    } else if (!id.equals(other.id)) {
       return false;
+    }
     return true;
   }
 

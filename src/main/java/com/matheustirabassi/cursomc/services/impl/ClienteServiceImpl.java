@@ -45,6 +45,12 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
     return null;
   }
 
+  /**
+   * Faz a busca paginada de clientes.
+   *
+   * @param pageable a paginação.
+   * @return os clientes paginados.
+   */
   @Transactional(readOnly = true)
   public Page<ClienteDto> findAllWithPagination(Pageable pageable) {
     Page<Cliente> result = getDAO().findAll(pageable);
@@ -57,6 +63,12 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
     return clienteRepository;
   }
 
+  /**
+   * Converte ClienteDto para Cliente.
+   *
+   * @param dto o ClienteDto.
+   * @return o Cliente.
+   */
   @Override
   public Cliente fromDto(ClienteDto dto) {
     Cliente cliente = ObjectMapperUtils.map(dto, Cliente.class);
@@ -77,6 +89,12 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
     return cliente;
   }
 
+  /**
+   * Converte EndereçoDto para Endereço.
+   *
+   * @param enderecoDto o endereçoDto.
+   * @return o Endereço
+   */
   public Endereco fromEnderecoDto(EnderecoDto enderecoDto) {
     Cidade cidade = new Cidade(null, enderecoDto.getCidade(), null);
     Estado estado = new Estado(null, null, enderecoDto.getEstado());

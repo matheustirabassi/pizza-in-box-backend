@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe intermediária para o cliente
+ */
 @NoArgsConstructor
 @Data
 public class ClienteDto implements Serializable {

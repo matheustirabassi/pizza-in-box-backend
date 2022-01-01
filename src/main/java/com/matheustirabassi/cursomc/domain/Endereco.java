@@ -1,7 +1,6 @@
 package com.matheustirabassi.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,18 +9,18 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
+/**
+ * Classe de endereço para o cliente.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-public class Endereco implements Serializable {
+public class Endereco {
 
-  private static final long serialVersionUID = 1L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
