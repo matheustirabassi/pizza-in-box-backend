@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.matheustirabassi</groupId>
+    <artifactId>build-tools</artifactId>
+    <version>0.0.1</version>
+    <name>Build Tools</name>
+    <description>Contains a set of build configuration resources like checkstyle and findbugs
+    </description>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

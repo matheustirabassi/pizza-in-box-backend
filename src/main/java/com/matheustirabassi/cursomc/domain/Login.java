@@ -13,80 +13,79 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Login implements Serializable{
+public class Login implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	@Column(unique = true)
-	private String user;
-	private String password;
-	@JsonIgnore
-	@OneToOne
-	private Cliente cliente;
-	
-	public Login() {
-	}
+  private static final long serialVersionUID = 1L;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
+  @Column(unique = true)
+  private String user;
+  private String password;
+  @JsonIgnore
+  @OneToOne
+  private Cliente cliente;
 
-	public Login(Integer id, String user, String password) {
-		this.id = id;
-		this.user = user;
-		this.password = password;
-	}
+  public Login() {}
 
-	public Integer getId() {
-		return id;
-	}
+  public Login(Integer id, String user, String password) {
+    this.id = id;
+    this.user = user;
+    this.password = password;
+  }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+  public Integer getId() {
+    return id;
+  }
 
-	public String getUser() {
-		return user;
-	}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-	public void setUser(String user) {
-		this.user = user;
-	}
+  public String getUser() {
+    return user;
+  }
 
-	public String getPassword() {
-		return password;
-	}
+  public void setUser(String user) {
+    this.user = user;
+  }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public Cliente getCliente() {
-		return cliente;
-	}
+  public String getPassword() {
+    return password;
+  }
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+  public Cliente getCliente() {
+    return cliente;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Login other = (Login) obj;
-		return Objects.equals(id, other.id);
-	}
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
+  }
 
-	@Override
-	public String toString() {
-		return "Login [id=" + id + ", user=" + user + ", password=" + password + "]";
-	}
+  @Override
+  public int hashCode() {
+    return Objects.hash(id);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Login other = (Login) obj;
+    return Objects.equals(id, other.id);
+  }
+
+  @Override
+  public String toString() {
+    return "Login [id=" + id + ", user=" + user + ", password=" + password + "]";
+  }
 
 }
