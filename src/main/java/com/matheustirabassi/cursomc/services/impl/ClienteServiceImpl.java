@@ -17,6 +17,8 @@ import com.matheustirabassi.cursomc.dto.EnderecoDto;
 import com.matheustirabassi.cursomc.repositories.ClienteRepository;
 import com.matheustirabassi.cursomc.repositories.GenericRepository;
 import com.matheustirabassi.cursomc.services.ClienteService;
+import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
+import com.matheustirabassi.cursomc.utils.ObjectMapperUtils;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -28,6 +30,11 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
 
   @Autowired
   private ClienteRepository clienteRepository;
+
+  public Cliente findById(Integer id) {
+    Optional<Cliente> obj = getDAO().findById(id);
+    return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado!"));
+  }
 
   public Cliente findByNome(String nome) {
     Optional<Cliente> obj = clienteRepository.findByNome(nome);
@@ -53,13 +60,27 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
 
   @Override
   public Cliente fromDto(ClienteDto dto) {
-    return new Cliente(dto.getId(), dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(),
-        dto.getTipo().getCod(), dto.getStatusPermissao().getCod(), dto.getTelefones());
+    Cliente cliente = ObjectMapperUtils.map(dto, Cliente.class);
+    cliente.getLogin().setCliente(cliente);
+
+    Estado estado = new Estado();
+    estado.setNome(dto.getEnderecos().get(0).getEstado());
+
+    Cidade cidade = new Cidade(null, dto.getEnderecos().get(0).getCidade(), estado);
+    estado.getCidades().add(cidade);
+
+    Endereco endereco = ObjectMapperUtils.map(dto.getEnderecos().get(0), Endereco.class);
+    endereco.setCidade(cidade);
+    endereco.setCliente(cliente);
+
+    cliente.setEnderecos(List.of(endereco));
+
+    return cliente;
   }
 
   public Endereco fromEnderecoDto(EnderecoDto enderecoDto) {
     Cidade cidade = new Cidade(null, enderecoDto.getCidade(), null);
-    Estado estado = new Estado(null, enderecoDto.getEstado());
+    Estado estado = new Estado(null, null, enderecoDto.getEstado());
     cidade.setEstado(estado);
     estado.getCidades().add(cidade);
     return new Endereco(null, enderecoDto.getLogradouro(), enderecoDto.getNumero(),
@@ -81,8 +102,12 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
   }
 
   @Override
-  public Cliente findByCpfOuCnpj(String text) {
-    return clienteRepository.findByCpfOuCnpj(text).get(0);
+  public Cliente findByCpfOuCnpj(String text) throws ObjectNotFoundException {
+    try {
+      return clienteRepository.findByCpfOuCnpj(text).get(0);
+    } catch (IndexOutOfBoundsException exception) {
+      throw new ObjectNotFoundException("Cliente Não encontrado");
+    }
   }
 
 }

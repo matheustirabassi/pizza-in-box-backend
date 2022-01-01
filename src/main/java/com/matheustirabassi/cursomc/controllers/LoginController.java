@@ -1,17 +1,17 @@
-package com.matheustirabassi.cursomc.resources;
+package com.matheustirabassi.cursomc.controllers;
 
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,11 +24,13 @@ import com.matheustirabassi.cursomc.domain.Login;
 import com.matheustirabassi.cursomc.dto.LoginDto;
 import com.matheustirabassi.cursomc.services.LoginService;
 
+import lombok.extern.log4j.Log4j2;
+
+@Component
+@Log4j2
 @RestController
 @RequestMapping(value = "/logins")
 public class LoginController {
-
-  Logger log = Logger.getLogger(LoginController.class);
 
   @Autowired
   private LoginService service;
@@ -48,8 +50,7 @@ public class LoginController {
 
   @PostMapping
   public ResponseEntity<LoginDto> insert(@RequestBody LoginDto obj) {
-    obj.setPassword(getPasswordEncoder().encode(obj.getPassword()));;
-    obj = service.saveLoginWithClienteId(obj, obj.getClienteId());
+    obj.setPassword(getPasswordEncoder().encode(obj.getPassword()));
     return ResponseEntity.ok(obj);
   }
 

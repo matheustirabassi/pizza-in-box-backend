@@ -1,5 +1,6 @@
 package com.matheustirabassi.cursomc.dto;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ProdutoDto {
+public class ProdutoDto implements Serializable {
+  private static final long serialVersionUID = 1L;
 
   private Integer id;
   private String nome;
