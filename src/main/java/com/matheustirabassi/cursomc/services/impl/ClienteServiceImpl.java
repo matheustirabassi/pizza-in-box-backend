@@ -1,13 +1,5 @@
 package com.matheustirabassi.cursomc.services.impl;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
 import com.matheustirabassi.cursomc.domain.Cidade;
 import com.matheustirabassi.cursomc.domain.Cliente;
 import com.matheustirabassi.cursomc.domain.Endereco;
@@ -19,8 +11,14 @@ import com.matheustirabassi.cursomc.repositories.GenericRepository;
 import com.matheustirabassi.cursomc.services.ClienteService;
 import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
 import com.matheustirabassi.cursomc.utils.ObjectMapperUtils;
-
+import java.util.List;
+import java.util.Optional;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Log4j2
 @Service
@@ -47,8 +45,9 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
     return null;
   }
 
+  @Transactional(readOnly = true)
   public Page<ClienteDto> findAllWithPagination(Pageable pageable) {
-    Page<Cliente> result = clienteRepository.findAll(pageable);
+    Page<Cliente> result = getDAO().findAll(pageable);
     log.info("Buscando todos os clientes por paginação...");
     return result.map(ClienteDto::new);
   }
@@ -87,6 +86,7 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
         enderecoDto.getComplemento(), enderecoDto.getBairro(), enderecoDto.getCep(), cidade, null);
   }
 
+  @Transactional(readOnly = true)
   @Override
   public List<Endereco> findByEnderecosWithClienteId(Integer id) {
     return clienteRepository.findByEnderecosWithClienteId(id);
