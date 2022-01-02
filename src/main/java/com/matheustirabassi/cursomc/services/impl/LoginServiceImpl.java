@@ -1,11 +1,5 @@
 package com.matheustirabassi.cursomc.services.impl;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.matheustirabassi.cursomc.domain.Cliente;
 import com.matheustirabassi.cursomc.domain.Login;
 import com.matheustirabassi.cursomc.dto.LoginDto;
@@ -14,6 +8,10 @@ import com.matheustirabassi.cursomc.repositories.GenericRepository;
 import com.matheustirabassi.cursomc.repositories.LoginRepository;
 import com.matheustirabassi.cursomc.services.LoginService;
 import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class LoginServiceImpl extends GenericServiceImpl<Login> implements LoginService {
@@ -65,7 +63,7 @@ public class LoginServiceImpl extends GenericServiceImpl<Login> implements Login
   public Login fromDto(LoginDto dto) {
     Login login = new Login();
     login.setId(dto.getId());
-    login.setUser(dto.getUser());
+    login.setUsername(dto.getUser());
     login.setPassword(dto.getPassword());
     return login;
 

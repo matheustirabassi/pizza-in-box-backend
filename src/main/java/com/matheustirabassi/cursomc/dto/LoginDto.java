@@ -1,14 +1,11 @@
 package com.matheustirabassi.cursomc.dto;
 
+import com.matheustirabassi.cursomc.domain.Login;
+import com.matheustirabassi.cursomc.domain.enums.StatusPermissao;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.persistence.Column;
-
-import com.matheustirabassi.cursomc.domain.Login;
-import com.matheustirabassi.cursomc.domain.enums.StatusPermissao;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class LoginDto implements Serializable {
+
   private static final long serialVersionUID = 1L;
   private Integer id;
   @Column(unique = true)
@@ -26,7 +24,7 @@ public class LoginDto implements Serializable {
 
   public LoginDto(Login login) {
     id = login.getId();
-    user = login.getUser();
+    user = login.getUsername();
     password = login.getPassword();
     statusPermissao = login.getCliente().getStatusPermissao().getCod();
   }
