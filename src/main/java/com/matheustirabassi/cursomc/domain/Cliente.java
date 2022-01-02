@@ -50,7 +50,7 @@ public class Cliente implements Serializable {
   private Integer tipo;
   private Integer statusPermissao;
   @ElementCollection
-  @CollectionTable(name = "telefone")
+  @CollectionTable(name = "tb_cellphone")
   @Fetch(FetchMode.JOIN)
   private Set<String> telefones = new HashSet<>();
 

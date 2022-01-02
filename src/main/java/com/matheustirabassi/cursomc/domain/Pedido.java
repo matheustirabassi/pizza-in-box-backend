@@ -41,11 +41,11 @@ public class Pedido implements Serializable {
   private Pagamento pagamento;
 
   @ManyToOne
-  @JoinColumn(name = "clienteId")
+  @JoinColumn(name = "cliente_id")
   private Cliente cliente;
 
   @ManyToOne
-  @JoinColumn(name = "enderecoDeEntregaId")
+  @JoinColumn(name = "endereco_de_entrega_Id")
   private Endereco enderecoDeEntrega;
 
   @OneToMany(mappedBy = "id.pedido", fetch = FetchType.EAGER)
