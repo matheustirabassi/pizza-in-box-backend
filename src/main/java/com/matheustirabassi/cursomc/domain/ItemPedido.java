@@ -1,12 +1,13 @@
 package com.matheustirabassi.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.matheustirabassi.cursomc.domain.pk.ItemPedidoPK;
 import java.io.Serializable;
-
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+@Table(name = "tb_order_item")
 @Entity
 public class ItemPedido implements Serializable {
 
@@ -20,7 +21,8 @@ public class ItemPedido implements Serializable {
   private Integer quantidade;
   private Double preco;
 
-  public ItemPedido() {}
+  public ItemPedido() {
+  }
 
   public ItemPedido(Pedido pedido, Produto produto, Double desconto, Integer quantidade,
       Double preco) {
@@ -72,6 +74,10 @@ public class ItemPedido implements Serializable {
     this.preco = preco;
   }
 
+  public Double getSubTotal() {
+    return preco * quantidade;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -82,18 +88,23 @@ public class ItemPedido implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     ItemPedido other = (ItemPedido) obj;
     if (id == null) {
-      if (other.id != null)
+      if (other.id != null) {
         return false;
-    } else if (!id.equals(other.id))
+      }
+    } else if (!id.equals(other.id)) {
       return false;
+    }
     return true;
   }
 

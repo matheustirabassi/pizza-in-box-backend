@@ -1,7 +1,9 @@
 package com.matheustirabassi.cursomc.controllers.exceptions;
 
+import com.matheustirabassi.cursomc.services.exceptions.AuthorizationException;
+import com.matheustirabassi.cursomc.services.exceptions.DataIntegrityException;
+import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -9,24 +11,18 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.matheustirabassi.cursomc.services.exceptions.AuthorizationException;
-import com.matheustirabassi.cursomc.services.exceptions.DataIntegrityException;
-import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
-
 /**
- * Handler para para manipulação de erros
- *
+ * Handler para para manipulação de erros.
  */
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
   /**
-   * Esse método tratatá as exceções desse tipo. A anotação é que define isso.
-   *
-   * A assinatura desse método é padrão.
+   * Esse método tratatá as exceções desse tipo. A anotação é que define isso. A assinatura desse
+   * método é padrão.
    *
    * @ExceptionHandler Define que o método será um tratador de exceções do tipo do parâmetro da
-   *                   anotação
+   * anotação.
    */
   @ExceptionHandler(ObjectNotFoundException.class)
   public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e,

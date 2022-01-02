@@ -10,12 +10,14 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * Super classe dos tipos de pagamento.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "tb_payment")
 public abstract class Pagamento implements Serializable {
 
   private static final long serialVersionUID = 1L;

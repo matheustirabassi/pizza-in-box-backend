@@ -9,11 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * Classe de login para o cliente.
  */
 @Entity
+@Table(name = "tb_login")
 public class Login implements Serializable {
 
   private static final long serialVersionUID = 1L;

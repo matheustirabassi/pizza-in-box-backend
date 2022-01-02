@@ -5,6 +5,7 @@ import com.matheustirabassi.cursomc.domain.Endereco;
 import com.matheustirabassi.cursomc.dto.ClienteDto;
 import com.matheustirabassi.cursomc.dto.EnderecoDto;
 import com.matheustirabassi.cursomc.services.ClienteService;
+import com.matheustirabassi.cursomc.services.validation.BrazilValidation;
 import java.net.URI;
 import java.util.List;
 import javassist.tools.rmi.ObjectNotFoundException;
@@ -52,7 +53,10 @@ public class ClienteController {
 
   @PostMapping
   public ResponseEntity<?> insert(@RequestBody ClienteDto clienteDto) {
-    System.out.println(clienteDto.getLogin().getPassword());
+    if (!BrazilValidation.isValidCNPJ(clienteDto.getCpfOuCnpj())) {
+//      throw new ValidationError(HttpStatus.BAD_REQUEST.value(), "CPF inválido",
+//          new Date().getTime());
+    }
     String clientePassword = clienteDto.getLogin().getPassword();
     clienteDto.getLogin().setPassword(getPasswordEncoder().encode(clientePassword));
 

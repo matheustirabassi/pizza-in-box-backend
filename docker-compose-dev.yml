@@ -1,0 +1,44 @@
+# This compose file only contains the basic services needed for this module to work.
+version: '3.7'
+services:
+  db:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: 123mudar
+      MYSQL_DATABASE: pizza-in-box
+      TZ: America/Sao_Paulo
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - 3308:3306
+    networks:
+      - mysql-network
+
+  adminer:
+    image: adminer
+    ports:
+      - 8090:8080
+    networks:
+      - mysql-network
+
+  app:
+    build: .
+    command: mvn spring-boot:run -Dspring-boot.run.profiles=devdocker -Dmaven.test.skip=true
+    restart: on-failure
+    ports:
+      - 8080:8080
+    volumes:
+      - app:/app
+    networks:
+      - mysql-network
+    depends_on:
+      - db
+
+networks:
+  mysql-network:
+
+volumes:
+  db:
+  app:

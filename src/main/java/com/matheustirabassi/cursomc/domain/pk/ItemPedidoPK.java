@@ -1,7 +1,8 @@
-package com.matheustirabassi.cursomc.domain;
+package com.matheustirabassi.cursomc.domain.pk;
 
+import com.matheustirabassi.cursomc.domain.Pedido;
+import com.matheustirabassi.cursomc.domain.Produto;
 import java.io.Serializable;
-
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -45,23 +46,30 @@ public class ItemPedidoPK implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     ItemPedidoPK other = (ItemPedidoPK) obj;
     if (pedido == null) {
-      if (other.pedido != null)
+      if (other.pedido != null) {
         return false;
-    } else if (!pedido.equals(other.pedido))
+      }
+    } else if (!pedido.equals(other.pedido)) {
       return false;
+    }
     if (produto == null) {
-      if (other.produto != null)
+      if (other.produto != null) {
         return false;
-    } else if (!produto.equals(other.produto))
+      }
+    } else if (!produto.equals(other.produto)) {
       return false;
+    }
     return true;
   }
 

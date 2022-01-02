@@ -1,13 +1,13 @@
 package com.matheustirabassi.cursomc.domain;
 
-import java.util.Date;
-
-import javax.persistence.Entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.matheustirabassi.cursomc.domain.enums.EstadoPagamento;
+import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_payment_payment_bank_slip")
 public class PagamentoComBoleto extends Pagamento {
 
   private static final long serialVersionUID = 1L;

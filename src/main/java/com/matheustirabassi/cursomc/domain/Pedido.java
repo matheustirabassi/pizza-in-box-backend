@@ -1,6 +1,7 @@
 package com.matheustirabassi.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.matheustirabassi.cursomc.domain.enums.OrderStatus;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,6 +24,7 @@ import javax.persistence.TemporalType;
  * Classe de pedido para os produtos
  */
 @Entity
+@Table(name = "tb_order")
 public class Pedido implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -31,7 +34,7 @@ public class Pedido implements Serializable {
   private Integer id;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @JsonFormat(pattern = "dd/MM/yyyy hh:mm")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
   private Date instante;
 
   @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
@@ -47,6 +50,8 @@ public class Pedido implements Serializable {
 
   @OneToMany(mappedBy = "id.pedido", fetch = FetchType.EAGER)
   private Set<ItemPedido> itens = new HashSet<>();
+
+  private Integer orderStatus;
 
   public Pedido() {
   }
@@ -104,6 +109,24 @@ public class Pedido implements Serializable {
 
   public void setItens(Set<ItemPedido> itens) {
     this.itens = itens;
+  }
+
+  public OrderStatus getOrderStatus() {
+    return OrderStatus.valueOf(orderStatus);
+  }
+
+  public void setOrderStatus(OrderStatus orderStatus) {
+    if (orderStatus != null) {
+      this.orderStatus = orderStatus.getCode();
+    }
+  }
+
+  public Double getTotal() {
+    double sum = 0.0;
+    for (ItemPedido x : itens) {
+      sum += x.getSubTotal();
+    }
+    return sum;
   }
 
   @Override

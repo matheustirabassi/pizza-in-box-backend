@@ -17,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +34,7 @@ import org.hibernate.annotations.FetchMode;
 @AllArgsConstructor
 @Data
 @Entity
+@Table(name = "tb_customer")
 public class Cliente implements Serializable {
 
   private static final long serialVersionUID = 1L;
