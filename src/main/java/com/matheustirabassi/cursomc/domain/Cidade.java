@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Classe de cidade para cliente.
@@ -27,8 +28,8 @@ public class Cidade {
   private Integer id;
   private String nome;
 
-
-  @ManyToOne(cascade = CascadeType.PERSIST)
+  @ToString.Exclude
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "estado_id")
   private Estado estado;
 }

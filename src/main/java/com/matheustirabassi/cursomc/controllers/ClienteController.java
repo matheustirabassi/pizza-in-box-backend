@@ -5,11 +5,11 @@ import com.matheustirabassi.cursomc.domain.Endereco;
 import com.matheustirabassi.cursomc.dto.ClienteDto;
 import com.matheustirabassi.cursomc.dto.EnderecoDto;
 import com.matheustirabassi.cursomc.services.ClienteService;
-import com.matheustirabassi.cursomc.services.validation.BrazilValidation;
+import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
 import java.net.URI;
 import java.util.List;
-import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -51,12 +51,9 @@ public class ClienteController {
     return ResponseEntity.ok(service.findAllWithPagination(pageable));
   }
 
+  // TODO: Fazer validações na inserção de usuário
   @PostMapping
   public ResponseEntity<?> insert(@RequestBody ClienteDto clienteDto) {
-    if (!BrazilValidation.isValidCNPJ(clienteDto.getCpfOuCnpj())) {
-//      throw new ValidationError(HttpStatus.BAD_REQUEST.value(), "CPF inválido",
-//          new Date().getTime());
-    }
     String clientePassword = clienteDto.getLogin().getPassword();
     clienteDto.getLogin().setPassword(getPasswordEncoder().encode(clientePassword));
 
@@ -78,16 +75,24 @@ public class ClienteController {
   }
 
   @GetMapping(value = "{id}/enderecos")
-  public ResponseEntity<List<EnderecoDto>> findAllEnderecos(@PathVariable Integer id) {
+  public ResponseEntity<List<EnderecoDto>> findAllEnderecos(@PathVariable Integer id)
+      throws ObjectNotFoundException {
     List<Endereco> enderecos = service.findByEnderecosWithClienteId(id);
+    if (enderecos.isEmpty()) {
+      throw new ObjectNotFoundException("O cliente não tem endereços!");
+    }
     List<EnderecoDto> enderecoDto = EnderecoDto.convertList(enderecos);
     return ResponseEntity.ok(enderecoDto);
   }
 
   @DeleteMapping(value = "{id}")
   public ResponseEntity<?> deleteClienteById(@PathVariable Integer id) {
-    service.deleteById(id);
-    return ResponseEntity.ok().build();
+    try {
+      service.deleteById(id);
+      return ResponseEntity.ok().build();
+    } catch (EmptyResultDataAccessException exception) {
+      throw new ObjectNotFoundException("Cliente não encontrado!");
+    }
   }
 
   @GetMapping(value = "findByCpf")

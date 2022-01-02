@@ -1,6 +1,5 @@
 package com.matheustirabassi.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matheustirabassi.cursomc.domain.enums.StatusPermissao;
 import com.matheustirabassi.cursomc.domain.enums.TipoCliente;
 import java.io.Serializable;
@@ -22,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -38,6 +38,7 @@ import org.hibernate.annotations.FetchMode;
 public class Cliente implements Serializable {
 
   private static final long serialVersionUID = 1L;
+  @ToString.Exclude
   @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
   @BatchSize(size = 1000)
   List<Endereco> enderecos = new ArrayList<>();
@@ -54,10 +55,10 @@ public class Cliente implements Serializable {
   @Fetch(FetchMode.JOIN)
   private Set<String> telefones = new HashSet<>();
 
-  @JsonIgnore
+  @ToString.Exclude
   @OneToMany(mappedBy = "cliente")
   private List<Pedido> pedidos = new ArrayList<>();
-  @JsonIgnore
+  @ToString.Exclude
   @OneToOne(cascade = CascadeType.ALL)
   private Login login;
 

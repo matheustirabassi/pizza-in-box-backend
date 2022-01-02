@@ -1,6 +1,5 @@
 package com.matheustirabassi.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +11,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Classe de endereço para o cliente.
@@ -31,11 +31,12 @@ public class Endereco {
   private String complemento;
   private String bairro;
   private String cep;
-  @ManyToOne(cascade = CascadeType.PERSIST)
+  @ToString.Exclude
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "cidade_id")
   private Cidade cidade;
 
-  @JsonIgnore
+  @ToString.Exclude
   @ManyToOne
   @JoinColumn(name = "cliente_id")
   private Cliente cliente;

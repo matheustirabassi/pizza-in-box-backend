@@ -9,12 +9,15 @@ import com.matheustirabassi.cursomc.dto.EnderecoDto;
 import com.matheustirabassi.cursomc.repositories.ClienteRepository;
 import com.matheustirabassi.cursomc.repositories.GenericRepository;
 import com.matheustirabassi.cursomc.services.ClienteService;
+import com.matheustirabassi.cursomc.services.exceptions.DataIntegrityException;
 import com.matheustirabassi.cursomc.services.exceptions.ObjectNotFoundException;
 import com.matheustirabassi.cursomc.utils.ObjectMapperUtils;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,15 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
 
   @Autowired
   private ClienteRepository clienteRepository;
+
+  @Override
+  public Cliente saveOrUpdate(Cliente cliente) {
+    try {
+      return clienteRepository.save(cliente);
+    } catch (DataIntegrityViolationException exception) {
+      throw new DataIntegrityException("O username já existe!");
+    }
+  }
 
   public Cliente findById(Integer id) {
     Optional<Cliente> obj = getDAO().findById(id);
@@ -73,13 +85,12 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
   public Cliente fromDto(ClienteDto dto) {
     Cliente cliente = ObjectMapperUtils.map(dto, Cliente.class);
     cliente.getLogin().setCliente(cliente);
-
+    cliente.getLogin().setUsername(dto.getLogin().getUser());
     Estado estado = new Estado();
     estado.setNome(dto.getEnderecos().get(0).getEstado());
 
     Cidade cidade = new Cidade(null, dto.getEnderecos().get(0).getCidade(), estado);
     estado.getCidades().add(cidade);
-
     Endereco endereco = ObjectMapperUtils.map(dto.getEnderecos().get(0), Endereco.class);
     endereco.setCidade(cidade);
     endereco.setCliente(cliente);
@@ -97,7 +108,7 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
    */
   public Endereco fromEnderecoDto(EnderecoDto enderecoDto) {
     Cidade cidade = new Cidade(null, enderecoDto.getCidade(), null);
-    Estado estado = new Estado(null, null, enderecoDto.getEstado());
+    Estado estado = new Estado(new ArrayList<>(), null, enderecoDto.getEstado());
     cidade.setEstado(estado);
     estado.getCidades().add(cidade);
     return new Endereco(null, enderecoDto.getLogradouro(), enderecoDto.getNumero(),
@@ -107,9 +118,11 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
   @Transactional(readOnly = true)
   @Override
   public List<Endereco> findByEnderecosWithClienteId(Integer id) {
-    return clienteRepository.findByEnderecosWithClienteId(id);
+    return clienteRepository.findByEnderecosWithClienteId(id).orElseThrow(
+        () -> new ObjectNotFoundException("Endereços não encontrados para esse cliente"));
   }
 
+  @Transactional
   @Override
   public Cliente insertEnderecoCliente(Integer id, EnderecoDto enderecoDto) {
     Cliente obj = findById(id);
@@ -119,6 +132,7 @@ public class ClienteServiceImpl extends GenericServiceImpl<Cliente> implements C
     return saveOrUpdate(obj);
   }
 
+  @Transactional
   @Override
   public Cliente findByCpfOuCnpj(String text) throws ObjectNotFoundException {
     try {

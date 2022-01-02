@@ -12,24 +12,23 @@ services:
     volumes:
       - db:/var/lib/mysql
     ports:
-      - 3308:3306
+      - "3308:3306"
     networks:
       - mysql-network
 
   adminer:
     image: adminer
     ports:
-      - 8090:8080
+      - "8090:8080"
     networks:
       - mysql-network
 
   app:
-    image: dockerserver1604/pizza-in-box
     build: .
     command: mvn spring-boot:run -Dspring-boot.run.profiles=devdocker -Dmaven.test.skip=true
     restart: on-failure
     ports:
-      - 8081:8080
+      - "8081:8080"
     volumes:
       - app:/app
     networks:

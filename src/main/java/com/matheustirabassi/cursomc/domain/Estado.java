@@ -1,6 +1,5 @@
 package com.matheustirabassi.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -12,6 +11,7 @@ import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Classe que compõe o endereço do cliente com a cidade
@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "tb_state")
 public class Estado {
 
-  @JsonIgnore
+  @ToString.Exclude
   @OneToMany(mappedBy = "estado")
   List<Cidade> cidades = new ArrayList<>();
   @Id
