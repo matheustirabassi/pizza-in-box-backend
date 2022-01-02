@@ -5,16 +5,17 @@ import com.matheustirabassi.cursomc.domain.Endereco;
 import com.matheustirabassi.cursomc.dto.ClienteDto;
 import com.matheustirabassi.cursomc.dto.EnderecoDto;
 import com.matheustirabassi.cursomc.services.ClienteService;
+import com.matheustirabassi.cursomc.services.validation.BrazilValidation;
 import java.net.URI;
 import java.util.List;
 import javassist.tools.rmi.ObjectNotFoundException;
-import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,7 +53,10 @@ public class ClienteController {
 
   @PostMapping
   public ResponseEntity<?> insert(@RequestBody ClienteDto clienteDto) {
-    System.out.println(clienteDto.getLogin().getPassword());
+    if (!BrazilValidation.isValidCNPJ(clienteDto.getCpfOuCnpj())) {
+//      throw new ValidationError(HttpStatus.BAD_REQUEST.value(), "CPF inválido",
+//          new Date().getTime());
+    }
     String clientePassword = clienteDto.getLogin().getPassword();
     clienteDto.getLogin().setPassword(getPasswordEncoder().encode(clientePassword));
 

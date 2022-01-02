@@ -4,6 +4,7 @@ package com.matheustirabassi.cursomc.services.validation;
  * Classe de validação de documentos para o Brasil.
  */
 public class BrazilValidation {
+
   // CPF
   private static final int[] weightSsn = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
 
@@ -27,12 +28,13 @@ public class BrazilValidation {
    * @return O resultado da validação do CPF.
    */
   public static boolean isValidCPF(final String ssn) {
-    if ((ssn == null) || (ssn.length() != 11) || ssn.matches(ssn.charAt(0) + "{11}"))
+    if ((ssn == null) || (ssn.length() != 11) || ssn.matches(ssn.charAt(0) + "{11}")) {
       return false;
+    }
 
-    final Integer digit1 = calculate(ssn.substring(0, 9), weightSsn);
-    final Integer digit2 = calculate(ssn.substring(0, 9) + digit1, weightSsn);
-    return ssn.equals(ssn.substring(0, 9) + digit1.toString() + digit2.toString());
+    final int digit1 = calculate(ssn.substring(0, 9), weightSsn);
+    final int digit2 = calculate(ssn.substring(0, 9) + digit1, weightSsn);
+    return ssn.equals(ssn.substring(0, 9) + Integer.toString(digit1) + Integer.toString(digit2));
   }
 
   /**
@@ -42,12 +44,13 @@ public class BrazilValidation {
    * @return a validação do CNPJ
    */
   public static boolean isValidCNPJ(final String tin) {
-    if ((tin == null) || (tin.length() != 14) || tin.matches(tin.charAt(0) + "{14}"))
+    if ((tin == null) || (tin.length() != 14) || tin.matches(tin.charAt(0) + "{14}")) {
       return false;
+    }
 
-    final Integer digit1 = calculate(tin.substring(0, 12), weightTin);
-    final Integer digit2 = calculate(tin.substring(0, 12) + digit1, weightTin);
-    return tin.equals(tin.substring(0, 12) + digit1.toString() + digit2.toString());
+    final int digit1 = calculate(tin.substring(0, 12), weightTin);
+    final int digit2 = calculate(tin.substring(0, 12) + digit1, weightTin);
+    return tin.equals(tin.substring(0, 12) + Integer.toString(digit1) + Integer.toString(digit2));
   }
 
 }

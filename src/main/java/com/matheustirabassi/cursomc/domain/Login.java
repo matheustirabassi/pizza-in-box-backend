@@ -1,18 +1,21 @@
 package com.matheustirabassi.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+/**
+ * Classe de login para o cliente.
+ */
 @Entity
+@Table(name = "tb_login")
 public class Login implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -26,7 +29,8 @@ public class Login implements Serializable {
   @OneToOne
   private Cliente cliente;
 
-  public Login() {}
+  public Login() {
+  }
 
   public Login(Integer id, String user, String password) {
     this.id = id;
@@ -73,12 +77,15 @@ public class Login implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Login other = (Login) obj;
     return Objects.equals(id, other.id);
   }

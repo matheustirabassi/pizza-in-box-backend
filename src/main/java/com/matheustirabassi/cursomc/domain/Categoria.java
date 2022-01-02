@@ -3,15 +3,19 @@ package com.matheustirabassi.cursomc.domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+/**
+ * Classe de categoria de produtos.
+ */
 @Entity
+@Table(name = "tb_category")
 public class Categoria implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -25,7 +29,8 @@ public class Categoria implements Serializable {
   @ManyToMany(mappedBy = "categorias", fetch = FetchType.EAGER)
   private List<Produto> produtos = new ArrayList<>();
 
-  public Categoria() {}
+  public Categoria() {
+  }
 
   public Categoria(Integer id, String nome) {
     this.id = id;
@@ -66,18 +71,23 @@ public class Categoria implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Categoria other = (Categoria) obj;
     if (id == null) {
-      if (other.id != null)
+      if (other.id != null) {
         return false;
-    } else if (!id.equals(other.id))
+      }
+    } else if (!id.equals(other.id)) {
       return false;
+    }
     return true;
   }
 

@@ -1,7 +1,8 @@
 package com.matheustirabassi.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.matheustirabassi.cursomc.domain.enums.EstadoPagamento;
 import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -9,12 +10,14 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.matheustirabassi.cursomc.domain.enums.EstadoPagamento;
-
+/**
+ * Super classe dos tipos de pagamento.
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "tb_payment")
 public abstract class Pagamento implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -73,18 +76,23 @@ public abstract class Pagamento implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Pagamento other = (Pagamento) obj;
     if (id == null) {
-      if (other.id != null)
+      if (other.id != null) {
         return false;
-    } else if (!id.equals(other.id))
+      }
+    } else if (!id.equals(other.id)) {
       return false;
+    }
     return true;
   }
 

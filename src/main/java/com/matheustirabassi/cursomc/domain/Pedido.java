@@ -1,10 +1,11 @@
 package com.matheustirabassi.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.matheustirabassi.cursomc.domain.enums.OrderStatus;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,12 +16,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
+/**
+ * Classe de pedido para os produtos
+ */
 @Entity
+@Table(name = "tb_order")
 public class Pedido implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -30,7 +34,7 @@ public class Pedido implements Serializable {
   private Integer id;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @JsonFormat(pattern = "dd/MM/yyyy hh:mm")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
   private Date instante;
 
   @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
@@ -47,7 +51,10 @@ public class Pedido implements Serializable {
   @OneToMany(mappedBy = "id.pedido", fetch = FetchType.EAGER)
   private Set<ItemPedido> itens = new HashSet<>();
 
-  public Pedido() {}
+  private Integer orderStatus;
+
+  public Pedido() {
+  }
 
   public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
     this.id = id;
@@ -104,6 +111,24 @@ public class Pedido implements Serializable {
     this.itens = itens;
   }
 
+  public OrderStatus getOrderStatus() {
+    return OrderStatus.valueOf(orderStatus);
+  }
+
+  public void setOrderStatus(OrderStatus orderStatus) {
+    if (orderStatus != null) {
+      this.orderStatus = orderStatus.getCode();
+    }
+  }
+
+  public Double getTotal() {
+    double sum = 0.0;
+    for (ItemPedido x : itens) {
+      sum += x.getSubTotal();
+    }
+    return sum;
+  }
+
   @Override
   public int hashCode() {
     final int prime = 31;
@@ -114,18 +139,23 @@ public class Pedido implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    if (this == obj)
+    if (this == obj) {
       return true;
-    if (obj == null)
+    }
+    if (obj == null) {
       return false;
-    if (getClass() != obj.getClass())
+    }
+    if (getClass() != obj.getClass()) {
       return false;
+    }
     Pedido other = (Pedido) obj;
     if (id == null) {
-      if (other.id != null)
+      if (other.id != null) {
         return false;
-    } else if (!id.equals(other.id))
+      }
+    } else if (!id.equals(other.id)) {
       return false;
+    }
     return true;
   }
 

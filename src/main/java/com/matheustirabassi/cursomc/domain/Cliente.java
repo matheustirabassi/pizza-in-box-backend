@@ -1,11 +1,13 @@
 package com.matheustirabassi.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.matheustirabassi.cursomc.domain.enums.StatusPermissao;
+import com.matheustirabassi.cursomc.domain.enums.TipoCliente;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -15,25 +17,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.matheustirabassi.cursomc.domain.enums.StatusPermissao;
-import com.matheustirabassi.cursomc.domain.enums.TipoCliente;
-
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
+/**
+ * Principal classe do projeto.
+ */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
+@Table(name = "tb_customer")
 public class Cliente implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -75,7 +76,6 @@ public class Cliente implements Serializable {
   public void setStatusPermissao(StatusPermissao statusPermissao) {
     this.statusPermissao = statusPermissao.getCod();
   }
-
 
 
 }

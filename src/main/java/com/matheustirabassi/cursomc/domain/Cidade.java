@@ -7,14 +7,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe de cidade para cliente.
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
+@Table(name = "tb_city")
 public class Cidade {
 
   @Id
@@ -23,7 +28,7 @@ public class Cidade {
   private String nome;
 
 
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "estado_id")
   private Estado estado;
 }

@@ -2,10 +2,12 @@ package com.matheustirabassi.cursomc.utils;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
+/**
+ * Faz o mapeamento para DTO`s e classes do domínio.
+ */
 public class ObjectMapperUtils {
 
   private static final ModelMapper modelMapper;
@@ -23,16 +25,17 @@ public class ObjectMapperUtils {
   /**
    * Hide from public usage.
    */
-  private ObjectMapperUtils() {}
+  private ObjectMapperUtils() {
+  }
 
   /**
    * <p>
    * Note: outClass object must have default constructor with no arguments
    * </p>
    *
-   * @param <D> type of result object.
-   * @param <T> type of source object to map from.
-   * @param entity entity that needs to be mapped.
+   * @param <D>      type of result object.
+   * @param <T>      type of source object to map from.
+   * @param entity   entity that needs to be mapped.
    * @param outClass class of result object.
    * @return new object of <code>outClass</code> type.
    */
@@ -46,9 +49,9 @@ public class ObjectMapperUtils {
    * </p>
    *
    * @param entityList list of entities that needs to be mapped
-   * @param outCLass class of result list element
-   * @param <D> type of objects in result list
-   * @param <T> type of entity in <code>entityList</code>
+   * @param outCLass   class of result list element
+   * @param <D>        type of objects in result list
+   * @param <T>        type of entity in <code>entityList</code>
    * @return list of mapped object with <code><D></code> type.
    */
   public static <D, T> Collection<D> mapAll(final Collection<T> entityList, Class<D> outCLass) {
@@ -58,7 +61,7 @@ public class ObjectMapperUtils {
   /**
    * Maps {@code source} to {@code destination}.
    *
-   * @param source object to map from
+   * @param source      object to map from
    * @param destination object to map to
    */
   public static <S, D> D map(final S source, D destination) {
