@@ -48,7 +48,7 @@ public class LoginServiceImpl extends GenericServiceImpl<Login> implements Login
   }
 
   @Override
-  protected GenericRepository<Login> getDAO() {
+  protected GenericRepository<Login> getDao() {
     return loginRepository;
   }
 

@@ -25,7 +25,7 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category>
   }
 
   @Override
-  protected GenericRepository<Category> getDAO() {
+  protected GenericRepository<Category> getDao() {
     return categoryRepository;
   }
 

@@ -33,16 +33,11 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   @Override
   public CustomerDto saveOrUpdate(CustomerDto customer) {
     try {
-      Customer customer1 = getDAO().save(fromDto(customer));
+      Customer customer1 = getDao().save(fromDto(customer));
       return new CustomerDto(customer1);
     } catch (DataIntegrityViolationException exception) {
       throw new DataIntegrityException("O username já existe!");
     }
-  }
-
-  public Customer findById(Long id) {
-    Optional<Customer> obj = getDAO().findById(id);
-    return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado!"));
   }
 
   public Customer findByNome(String nome) {
@@ -59,13 +54,13 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   @Override
   @Transactional(readOnly = true)
   public Page<CustomerDto> findAllWithPagination(Pageable pageable) {
-    Page<Customer> result = getDAO().findAll(pageable);
+    Page<Customer> result = getDao().findAll(pageable);
     log.info("Buscando todos os clientes por paginação...");
     return result.map(CustomerDto::new);
   }
 
   @Override
-  protected GenericRepository<Customer> getDAO() {
+  protected GenericRepository<Customer> getDao() {
     return customerRepository;
   }
 
