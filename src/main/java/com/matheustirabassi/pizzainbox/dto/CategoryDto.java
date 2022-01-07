@@ -1,6 +1,7 @@
 package com.matheustirabassi.pizzainbox.dto;
 
 import com.matheustirabassi.pizzainbox.domain.Category;
+import java.io.Serial;
 import java.io.Serializable;
 import javax.validation.constraints.NotEmpty;
 import lombok.Data;
@@ -11,6 +12,7 @@ import org.hibernate.validator.constraints.Length;
 @Data
 public class CategoryDto implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   private Long id;

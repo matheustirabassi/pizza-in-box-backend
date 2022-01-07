@@ -1,6 +1,5 @@
 package com.matheustirabassi.pizzainbox.domain;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -16,10 +15,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "tb_category")
-public class Category extends BaseEntity implements Serializable {
-
-
-  private static final long serialVersionUID = 1L;
+public class Category extends BaseEntity {
 
   private String name;
 
