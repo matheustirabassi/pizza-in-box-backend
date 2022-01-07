@@ -29,11 +29,12 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   @Autowired
   private CustomerRepository customerRepository;
 
+  @Transactional
   @Override
   public CustomerDto saveOrUpdate(CustomerDto customer) {
     try {
-
-      return new CustomerDto(customerRepository.save(fromDto(customer)));
+      Customer customer1 = getDAO().save(fromDto(customer));
+      return new CustomerDto(customer1);
     } catch (DataIntegrityViolationException exception) {
       throw new DataIntegrityException("O username já existe!");
     }

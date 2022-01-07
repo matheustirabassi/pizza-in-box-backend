@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -33,6 +34,7 @@ import org.hibernate.annotations.FetchMode;
 public class Customer extends BaseEntity {
 
   private String name;
+  @Column(unique = true)
   private String email;
   @NonNull
   private String document;

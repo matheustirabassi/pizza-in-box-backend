@@ -3,6 +3,7 @@ package com.matheustirabassi.pizzainbox.dto;
 import com.matheustirabassi.pizzainbox.domain.Customer;
 import com.matheustirabassi.pizzainbox.domain.enums.DocumentType;
 import com.matheustirabassi.pizzainbox.domain.enums.PermissionStatus;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
@@ -17,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class CustomerDto implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   private Long id;

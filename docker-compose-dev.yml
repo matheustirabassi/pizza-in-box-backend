@@ -28,7 +28,7 @@ services:
     command: mvn spring-boot:run -Dspring-boot.run.profiles=devdocker -Dmaven.test.skip=true
     restart: on-failure
     ports:
-      - "8081:8080"
+      - "8082:8080"
     volumes:
       - app:/app
     networks:

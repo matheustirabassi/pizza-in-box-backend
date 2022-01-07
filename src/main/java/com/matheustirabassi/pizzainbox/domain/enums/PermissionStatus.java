@@ -2,7 +2,7 @@ package com.matheustirabassi.pizzainbox.domain.enums;
 
 public enum PermissionStatus {
 
-  CUSTOMER(1, "ADMINISTRATOR"), ADMIN(2, "Administrador");
+  CUSTOMER(1, "Customer"), ADMIN(2, "Administrator");
 
   private int cod;
   private String description;

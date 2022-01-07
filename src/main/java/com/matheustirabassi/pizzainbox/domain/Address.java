@@ -27,7 +27,7 @@ public class Address extends BaseEntity {
   private String cep;
 
   @ToString.Exclude
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "city_id")
   private City city;
 

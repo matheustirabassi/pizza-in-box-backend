@@ -3,6 +3,7 @@ package com.matheustirabassi.pizzainbox.utils;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
 
 /**

@@ -56,14 +56,14 @@ public class CustomerController {
     String clientePassword = customerDto.getLogin().getPassword();
     customerDto.getLogin().setPassword(getPasswordEncoder().encode(clientePassword));
 
-    Customer obj = service.saveOrUpdate(service.fromDto(customerDto));
+    CustomerDto obj = service.saveOrUpdate(customerDto);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(obj.getId()).toUri();
     return ResponseEntity.created(uri).build();
 
   }
 
-  
+
   @PostMapping(value = "{id}/enderecos")
   public ResponseEntity<?> insertEndereco(@PathVariable Long id,
       @RequestBody AddressDto addressDto) {
