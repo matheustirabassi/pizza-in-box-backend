@@ -7,6 +7,8 @@ import com.matheustirabassi.pizzainbox.utils.ObjectMapperUtils;
 import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +38,11 @@ public class CategoryController {
     List<Category> categories = service.findAll();
     return ResponseEntity.ok().body(
         ObjectMapperUtils.mapAll(categories, CategoryDto.class));
+  }
+  @GetMapping("/page")
+  public ResponseEntity<Page<CategoryDto>> findPage(Pageable pageable) {
+    Page<Category> categories = service.findWithPagination(pageable);
+    return ResponseEntity.ok().body(categories.map(CategoryDto::new));
   }
 
   @PostMapping
