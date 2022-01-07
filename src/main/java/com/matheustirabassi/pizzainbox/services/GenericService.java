@@ -8,7 +8,7 @@ public interface GenericService<T> {
 
   T save(T entity);
 
-  T update(T entity, Long id);
+  T update(T entity) throws NoSuchMethodException, ClassNotFoundException;
 
   void delete(T entity);
 

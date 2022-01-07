@@ -1,11 +1,14 @@
 package com.matheustirabassi.pizzainbox.controllers;
 
 import com.matheustirabassi.pizzainbox.domain.Category;
+import com.matheustirabassi.pizzainbox.dto.CategoryDto;
 import com.matheustirabassi.pizzainbox.services.impl.CategoryServiceImpl;
+import com.matheustirabassi.pizzainbox.utils.ObjectMapperUtils;
 import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,9 +32,10 @@ public class CategoryController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Category>> findAll() {
+  public ResponseEntity<List<CategoryDto>> findAll() {
     List<Category> categories = service.findAll();
-    return ResponseEntity.ok().body(categories);
+    return ResponseEntity.ok().body(
+        ObjectMapperUtils.mapAll(categories, CategoryDto.class));
   }
 
   @PostMapping
@@ -42,9 +46,15 @@ public class CategoryController {
     return ResponseEntity.created(uri).build();
   }
 
-  @PutMapping("/{id}")
-  public ResponseEntity<Void> update(@RequestBody Category categoryRequest, @PathVariable Long id) {
-    Category category = service.update(categoryRequest, id);
+  @PutMapping
+  public ResponseEntity<Void> update(@RequestBody Category categoryRequest) {
+    Category category = service.update(categoryRequest);
+    return ResponseEntity.noContent().build();
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> delete(@PathVariable Long id) {
+    service.deleteById(id);
     return ResponseEntity.noContent().build();
   }
 }
