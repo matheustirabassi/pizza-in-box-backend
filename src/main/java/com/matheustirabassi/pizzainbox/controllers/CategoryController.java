@@ -6,6 +6,7 @@ import com.matheustirabassi.pizzainbox.services.impl.CategoryServiceImpl;
 import com.matheustirabassi.pizzainbox.utils.ObjectMapperUtils;
 import java.net.URI;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,16 +47,16 @@ public class CategoryController {
   }
 
   @PostMapping
-  public ResponseEntity<Void> insert(@RequestBody Category categoryRequest) {
-    Category category = service.save(categoryRequest);
+  public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDto categoryRequest) {
+    Category category = service.save(service.fromDTO(categoryRequest));
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(category.getId()).toUri();
     return ResponseEntity.created(uri).build();
   }
 
   @PutMapping
-  public ResponseEntity<Void> update(@RequestBody Category categoryRequest) {
-    Category category = service.update(categoryRequest);
+  public ResponseEntity<Void> update(@Valid @RequestBody CategoryDto categoryRequest) {
+    Category category = service.update(service.fromDTO(categoryRequest));
     return ResponseEntity.noContent().build();
   }
 

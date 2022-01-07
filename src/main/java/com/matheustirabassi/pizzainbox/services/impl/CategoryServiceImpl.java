@@ -3,8 +3,10 @@ package com.matheustirabassi.pizzainbox.services.impl;
 import com.matheustirabassi.pizzainbox.dao.CategoryRepository;
 import com.matheustirabassi.pizzainbox.dao.GenericRepository;
 import com.matheustirabassi.pizzainbox.domain.Category;
+import com.matheustirabassi.pizzainbox.dto.CategoryDto;
 import com.matheustirabassi.pizzainbox.services.CategoryService;
 import com.matheustirabassi.pizzainbox.services.exceptions.ObjectNotFoundException;
+import com.matheustirabassi.pizzainbox.utils.ObjectMapperUtils;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,4 +31,8 @@ public class CategoryServiceImpl extends GenericServiceImpl<Category>
     return categoryRepository;
   }
 
+  @Override
+  public Category fromDTO(CategoryDto dto) {
+    return ObjectMapperUtils.map(dto, Category.class);
+  }
 }
