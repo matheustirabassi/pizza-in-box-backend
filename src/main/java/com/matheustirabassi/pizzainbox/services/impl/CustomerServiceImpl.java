@@ -36,7 +36,7 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
       Customer customer1 = getDao().save(fromDto(customer));
       return new CustomerDto(customer1);
     } catch (DataIntegrityViolationException exception) {
-      throw new DataIntegrityException("O username já existe!");
+      throw new DataIntegrityException(exception.getMessage(), exception);
     }
   }
 
@@ -119,7 +119,7 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
     Address address = fromEnderecoDto(addressDto);
     address.setCustomer(obj);
     obj.getAddresses().add(address);
-    return new CustomerDto(saveOrUpdate(obj));
+    return new CustomerDto(save(obj));
   }
 
   @Transactional(readOnly = true)

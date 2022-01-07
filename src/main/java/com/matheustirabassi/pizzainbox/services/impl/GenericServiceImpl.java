@@ -46,8 +46,14 @@ public abstract class GenericServiceImpl<T> implements GenericService<T> {
 
   @Override
   @Transactional
-  public T saveOrUpdate(T t) {
+  public T save(T t) {
     return getDao().save(t);
+  }
+
+  @Override
+  public T update(T entity, Long id) {
+    findById(id);
+    return save(entity);
   }
 
   /**

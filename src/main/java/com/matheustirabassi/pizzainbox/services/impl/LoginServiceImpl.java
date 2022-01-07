@@ -28,7 +28,7 @@ public class LoginServiceImpl extends GenericServiceImpl<Login> implements Login
   }
 
   @Override
-  public Login saveOrUpdate(Login login) {
+  public Login save(Login login) {
     return loginRepository.save(login);
   }
 
@@ -39,7 +39,7 @@ public class LoginServiceImpl extends GenericServiceImpl<Login> implements Login
       customer.setLogin(login);
       customer.setPermissionStatus(dto.getPermissionStatus());
       login.setCustomer(customer);
-      saveOrUpdate(login);
+      save(login);
       customerRepository.save(customer);
       return new LoginDto(login);
     } catch (Exception e) {

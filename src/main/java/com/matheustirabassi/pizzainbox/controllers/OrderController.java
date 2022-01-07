@@ -34,7 +34,7 @@ public class OrderController {
 
   @PostMapping
   public ResponseEntity<OrderDto> insert(@RequestBody Order order) {
-    OrderDto orderDto = new OrderDto(service.saveOrUpdate(order));
+    OrderDto orderDto = new OrderDto(service.save(order));
     return ResponseEntity.ok(orderDto);
   }
 }
