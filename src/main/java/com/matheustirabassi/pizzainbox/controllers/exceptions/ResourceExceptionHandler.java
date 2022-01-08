@@ -3,6 +3,7 @@ package com.matheustirabassi.pizzainbox.controllers.exceptions;
 import com.matheustirabassi.pizzainbox.services.exceptions.AuthorizationException;
 import com.matheustirabassi.pizzainbox.services.exceptions.DataIntegrityException;
 import com.matheustirabassi.pizzainbox.services.exceptions.ObjectNotFoundException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +63,17 @@ public class ResourceExceptionHandler {
 
     // retorna o erro HTTP correspondente a "acesso negado"
     return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+  }
+
+  @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+  public ResponseEntity<StandardError> duplicateField(SQLIntegrityConstraintViolationException e,
+      HttpServletRequest request) {
+    StandardError err =
+        new StandardError(HttpStatus.BAD_REQUEST.value(), e.getMessage(),
+            System.currentTimeMillis());
+
+    // retorna o erro HTTP correspondente a "entidade duplicada"
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
   }
 
 }

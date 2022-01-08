@@ -2,6 +2,7 @@ package com.matheustirabassi.pizzainbox.dto;
 
 import com.matheustirabassi.pizzainbox.domain.Login;
 import com.matheustirabassi.pizzainbox.domain.enums.PermissionStatus;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class LoginDto implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
   private Long id;
   @Column(unique = true)

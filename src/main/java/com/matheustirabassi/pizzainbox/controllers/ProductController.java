@@ -40,7 +40,7 @@ public class ProductController {
   @PostMapping
   public ResponseEntity<Void> insert(@RequestBody ProductDto productDto) {
     Product obj = service.fromDto(productDto);
-    obj = service.save(obj);
+    obj = service.saveOrUpdate(obj);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(obj.getId()).toUri();
     return ResponseEntity.created(uri).build();
@@ -50,7 +50,7 @@ public class ProductController {
   public ResponseEntity<Void> update(@RequestBody ProductDto objDTO, @PathVariable Long id) {
     Product obj = service.fromDto(objDTO);
     obj.setId(id);
-    obj = service.save(obj);
+    service.saveOrUpdate(obj);
     return ResponseEntity.noContent().build();
 
   }

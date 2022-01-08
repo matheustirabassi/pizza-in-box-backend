@@ -4,6 +4,7 @@ import com.matheustirabassi.pizzainbox.domain.Address;
 import com.matheustirabassi.pizzainbox.domain.Customer;
 import com.matheustirabassi.pizzainbox.dto.AddressDto;
 import com.matheustirabassi.pizzainbox.dto.CustomerDto;
+import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
 import com.matheustirabassi.pizzainbox.services.CustomerService;
 import com.matheustirabassi.pizzainbox.services.exceptions.ObjectNotFoundException;
 import java.net.URI;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,11 +54,11 @@ public class CustomerController {
 
   // TODO: Fazer validações na inserção de usuário
   @PostMapping
-  public ResponseEntity<?> insert(@RequestBody CustomerDto customerDto) {
-    String clientePassword = customerDto.getLogin().getPassword();
-    customerDto.getLogin().setPassword(getPasswordEncoder().encode(clientePassword));
+  public ResponseEntity<?> insert(@RequestBody NewCustomerDto newCustomerDto) {
+    String clientePassword = newCustomerDto.getLogin().getPassword();
+    newCustomerDto.getLogin().setPassword(getPasswordEncoder().encode(clientePassword));
 
-    CustomerDto obj = service.saveOrUpdate(customerDto);
+    NewCustomerDto obj = new NewCustomerDto(service.saveOrUpdate(service.fromDto(newCustomerDto)));
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(obj.getId()).toUri();
     return ResponseEntity.created(uri).build();
@@ -67,7 +69,7 @@ public class CustomerController {
   @PostMapping(value = "{id}/enderecos")
   public ResponseEntity<?> insertEndereco(@PathVariable Long id,
       @RequestBody AddressDto addressDto) {
-    CustomerDto obj = service.insertAddress(id, addressDto);
+    NewCustomerDto obj = service.insertAddress(id, addressDto);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(obj.getId()).toUri();
     return ResponseEntity.created(uri).build();
@@ -102,5 +104,11 @@ public class CustomerController {
 
   public PasswordEncoder getPasswordEncoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  @PutMapping
+  public ResponseEntity<Void> updateCustomer(@RequestBody CustomerDto customerDto) {
+    service.updateCustomer(customerDto);
+    return ResponseEntity.noContent().build();
   }
 }

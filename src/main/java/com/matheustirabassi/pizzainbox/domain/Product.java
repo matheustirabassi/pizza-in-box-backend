@@ -1,7 +1,6 @@
 package com.matheustirabassi.pizzainbox.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,10 +26,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "tb_product")
-public class Product extends BaseEntity implements Serializable {
-
-  
-  private static final long serialVersionUID = 1L;
+public class Product extends BaseEntity {
 
   private String name;
   private Double price;
