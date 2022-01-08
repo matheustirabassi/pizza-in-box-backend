@@ -13,7 +13,7 @@
 
 	<groupId>com.matheustirabassi.pizzainbox</groupId>
 	<artifactId>pizzainbox</artifactId>
-	<version>2.0</version>
+	<version>2.2</version>
 	<name>pizzainbox</name>
 	<description>Backend do sistema pizza-in-box</description>
 
