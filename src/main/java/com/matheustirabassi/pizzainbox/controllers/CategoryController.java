@@ -40,6 +40,7 @@ public class CategoryController {
     return ResponseEntity.ok().body(
         ObjectMapperUtils.mapAll(categories, CategoryDto.class));
   }
+
   @GetMapping("/page")
   public ResponseEntity<Page<CategoryDto>> findPage(Pageable pageable) {
     Page<Category> categories = service.findWithPagination(pageable);
@@ -48,7 +49,7 @@ public class CategoryController {
 
   @PostMapping
   public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDto categoryRequest) {
-    Category category = service.save(service.fromDTO(categoryRequest));
+    Category category = service.saveOrUpdate(service.fromDTO(categoryRequest));
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(category.getId()).toUri();
     return ResponseEntity.created(uri).build();
@@ -56,7 +57,7 @@ public class CategoryController {
 
   @PutMapping
   public ResponseEntity<Void> update(@Valid @RequestBody CategoryDto categoryRequest) {
-    Category category = service.update(service.fromDTO(categoryRequest));
+    service.updateCategory(categoryRequest);
     return ResponseEntity.noContent().build();
   }
 

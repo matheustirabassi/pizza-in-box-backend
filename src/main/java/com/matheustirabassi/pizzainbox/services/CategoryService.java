@@ -6,4 +6,6 @@ import com.matheustirabassi.pizzainbox.dto.CategoryDto;
 public interface CategoryService extends GenericService<Category> {
 
   Category fromDTO(CategoryDto dto);
+
+  void updateCategory(CategoryDto categoryDto);
 }
