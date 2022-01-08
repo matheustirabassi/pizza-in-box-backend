@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -27,11 +28,10 @@ public class NewCustomerDto implements Serializable {
 
   @NotEmpty(message = "Preenchimento obrigatório")
   @Length(min = 5, max = 80, message = "O tamanho deve ser entre 5 e 80 caracteres")
-
   private String name;
-  @NotEmpty(message = "Preenchimento obrigatório")
 
-  @Email(message = "email inválido.")
+  @NotEmpty(message = "Preenchimento obrigatório")
+  @Email(message = "O email é inválido")
   private String email;
 
   @NotEmpty(message = "Preenchimento obrigatório")
@@ -41,10 +41,13 @@ public class NewCustomerDto implements Serializable {
   @NotNull(message = "Preenchimento obrigatório")
   private Integer documentType;
 
+  @Size(min = 1, max = 2, message = "Somente é possível adicionar no máximo dois telefones")
   private Set<String> cellphones;
 
+  @Size(min = 1, max = 2, message = "Somente é possível adicionar no máximo dois endereços")
   private List<AddressDto> addresses;
 
+  @NotNull(message = "Preenchimento obrigatório")
   private NewLoginDto login;
 
   /**

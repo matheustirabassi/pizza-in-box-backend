@@ -21,4 +21,8 @@ public interface CustomerRepository extends GenericRepository<Customer> {
   @Override
   @Query(value = "SELECT c FROM Customer as c JOIN FETCH c.addresses WHERE c.id = :id")
   public Optional<Customer> findById(@Param("id") Long id);
+
+  @Query(value = "select case when (count(email) > 0) then true else false end "
+      + "from Customer c where c.email = :email")
+  public Boolean findByEmailExists(@Param("email") String email);
 }

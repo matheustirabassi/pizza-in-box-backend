@@ -3,6 +3,7 @@ package com.matheustirabassi.pizzainbox.services.impl;
 import com.matheustirabassi.pizzainbox.dao.CityRepository;
 import com.matheustirabassi.pizzainbox.dao.CustomerRepository;
 import com.matheustirabassi.pizzainbox.dao.GenericRepository;
+import com.matheustirabassi.pizzainbox.dao.LoginRepository;
 import com.matheustirabassi.pizzainbox.domain.Address;
 import com.matheustirabassi.pizzainbox.domain.City;
 import com.matheustirabassi.pizzainbox.domain.Customer;
@@ -11,6 +12,7 @@ import com.matheustirabassi.pizzainbox.dto.AddressDto;
 import com.matheustirabassi.pizzainbox.dto.CustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
 import com.matheustirabassi.pizzainbox.services.CustomerService;
+import com.matheustirabassi.pizzainbox.services.exceptions.DataIntegrityException;
 import com.matheustirabassi.pizzainbox.services.exceptions.ObjectNotFoundException;
 import com.matheustirabassi.pizzainbox.utils.ObjectMapperUtils;
 import java.util.List;
@@ -31,6 +33,9 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
 
   @Autowired
   private CityRepository cityRepository;
+
+  @Autowired
+  private LoginRepository loginRepository;
 
   public CustomerDto findByNome(String nome) {
     Optional<Customer> obj = customerRepository.findByName(nome);
@@ -87,8 +92,8 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
     city.setId(addressDto.getCity());
     state.getCities().add(city);
 
-    return new Address(addressDto.getStreet(), addressDto.getNumber(),
-        addressDto.getComplement(), addressDto.getDistrict(), addressDto.getCep(), city);
+    return new Address(addressDto.getStreet(), addressDto.getNumber(), addressDto.getComplement(),
+        addressDto.getDistrict(), addressDto.getCep(), city);
   }
 
   @Transactional(readOnly = true)
@@ -122,6 +127,9 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   @Transactional
   @Override
   public void updateCustomer(CustomerDto customerDto) {
+    if (customerRepository.findByEmailExists(customerDto.getEmail())) {
+      throw new DataIntegrityException("Esse email já existe!");
+    }
     Customer customerPersistence = findById(customerDto.getId());
     updateData(customerPersistence, ObjectMapperUtils.map(customerDto, Customer.class));
     saveOrUpdate(customerPersistence);
@@ -130,6 +138,18 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   private void updateData(Customer customer, Customer newCustomer) {
     customer.setName(newCustomer.getName());
     customer.setEmail(newCustomer.getEmail());
+  }
+
+  public Customer save(NewCustomerDto dto) {
+    
+    if (customerRepository.findByEmailExists(dto.getEmail())) {
+      throw new DataIntegrityException("Esse email já existe!");
+    }
+    if (loginRepository.findByUsernameExists(
+        dto.getLogin().getUser())) {
+      throw new DataIntegrityException("Esse nome de usuário já existe!");
+    }
+    return saveOrUpdate(fromDto(dto));
   }
 
 }

@@ -25,6 +25,9 @@ public class AddressDto implements Serializable {
   @NotEmpty(message = "Preenchimento obrigatório")
   private Long city;
 
+  public AddressDto() {
+  }
+
   public AddressDto(Address address) {
     this.id = address.getId();
     this.street = address.getStreet();

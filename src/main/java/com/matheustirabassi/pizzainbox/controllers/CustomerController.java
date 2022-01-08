@@ -58,7 +58,7 @@ public class CustomerController {
   public ResponseEntity<?> insert(@Valid @RequestBody NewCustomerDto newCustomerDto) {
     String clientePassword = newCustomerDto.getLogin().getPassword();
     newCustomerDto.getLogin().setPassword(getPasswordEncoder().encode(clientePassword));
-    Customer obj = service.saveOrUpdate(service.fromDto(newCustomerDto));
+    Customer obj = service.save(newCustomerDto);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(obj.getId()).toUri();
     return ResponseEntity.created(uri).build();
