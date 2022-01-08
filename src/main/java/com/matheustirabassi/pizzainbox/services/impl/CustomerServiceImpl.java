@@ -100,12 +100,14 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
 
   @Transactional
   @Override
-  public NewCustomerDto insertAddress(Long id, AddressDto addressDto) {
+  public Customer insertAddress(Long id, AddressDto addressDto) {
+    // TODO: o id do endereço não deve ser necessariamente ser setado
+    addressDto.setId(null);
     Customer obj = findById(id);
     Address address = fromEnderecoDto(addressDto);
     address.setCustomer(obj);
     obj.getAddresses().add(address);
-    return new NewCustomerDto(saveOrUpdate(obj));
+    return saveOrUpdate(obj);
   }
 
   @Transactional(readOnly = true)

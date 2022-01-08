@@ -17,7 +17,7 @@ public interface CustomerService extends GenericService<Customer> {
 
   public List<Address> findByAddressesWithCustomerId(Long id);
 
-  public NewCustomerDto insertAddress(Long id, AddressDto addressDto);
+  public Customer insertAddress(Long id, AddressDto addressDto);
 
   public CustomerDto findByDocument(String text);
 

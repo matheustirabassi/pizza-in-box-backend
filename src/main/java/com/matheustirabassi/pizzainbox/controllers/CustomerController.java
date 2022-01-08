@@ -9,6 +9,7 @@ import com.matheustirabassi.pizzainbox.services.CustomerService;
 import com.matheustirabassi.pizzainbox.services.exceptions.ObjectNotFoundException;
 import java.net.URI;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -54,11 +55,10 @@ public class CustomerController {
 
   // TODO: Fazer validações na inserção de usuário
   @PostMapping
-  public ResponseEntity<?> insert(@RequestBody NewCustomerDto newCustomerDto) {
+  public ResponseEntity<?> insert(@Valid @RequestBody NewCustomerDto newCustomerDto) {
     String clientePassword = newCustomerDto.getLogin().getPassword();
     newCustomerDto.getLogin().setPassword(getPasswordEncoder().encode(clientePassword));
-
-    NewCustomerDto obj = new NewCustomerDto(service.saveOrUpdate(service.fromDto(newCustomerDto)));
+    Customer obj = service.saveOrUpdate(service.fromDto(newCustomerDto));
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(obj.getId()).toUri();
     return ResponseEntity.created(uri).build();
@@ -69,7 +69,7 @@ public class CustomerController {
   @PostMapping(value = "{id}/enderecos")
   public ResponseEntity<?> insertEndereco(@PathVariable Long id,
       @RequestBody AddressDto addressDto) {
-    NewCustomerDto obj = service.insertAddress(id, addressDto);
+    Customer obj = service.insertAddress(id, addressDto);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(obj.getId()).toUri();
     return ResponseEntity.created(uri).build();

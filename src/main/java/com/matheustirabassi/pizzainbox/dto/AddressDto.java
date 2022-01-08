@@ -4,6 +4,7 @@ import com.matheustirabassi.pizzainbox.domain.Address;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -19,7 +20,9 @@ public class AddressDto implements Serializable {
   private String number;
   private String complement;
   private String district;
+  @NotEmpty(message = "Preenchimento obrigatório")
   private String cep;
+  @NotEmpty(message = "Preenchimento obrigatório")
   private Long city;
 
   public AddressDto(Address address) {
