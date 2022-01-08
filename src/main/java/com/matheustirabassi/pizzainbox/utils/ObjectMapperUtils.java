@@ -1,5 +1,9 @@
 package com.matheustirabassi.pizzainbox.utils;
 
+import com.matheustirabassi.pizzainbox.domain.Address;
+import com.matheustirabassi.pizzainbox.domain.Login;
+import com.matheustirabassi.pizzainbox.dto.AddressDto;
+import com.matheustirabassi.pizzainbox.dto.LoginDto;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +26,16 @@ public class ObjectMapperUtils {
   static {
     modelMapper = new ModelMapper();
     modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+    modelMapper.getConfiguration().setSkipNullEnabled(true);
+    modelMapper.createTypeMap(AddressDto.class, Address.class)
+        .addMappings(new PropertyMap<>() {
+          @Override
+          protected void configure() {
+            map().getCity().setId(source.getCity());
+          }
+        });
+    modelMapper.createTypeMap(LoginDto.class, Login.class).addMapping(LoginDto::getUser,
+        Login::setUsername);
   }
 
   /**

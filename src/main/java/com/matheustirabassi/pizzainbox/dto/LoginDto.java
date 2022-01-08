@@ -1,7 +1,6 @@
 package com.matheustirabassi.pizzainbox.dto;
 
 import com.matheustirabassi.pizzainbox.domain.Login;
-import com.matheustirabassi.pizzainbox.domain.enums.PermissionStatus;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
@@ -22,24 +21,15 @@ public class LoginDto implements Serializable {
   @Column(unique = true)
   private String user;
   private String password;
-  private Integer permissionStatus;
 
   public LoginDto(Login login) {
     id = login.getId();
     user = login.getUsername();
     password = login.getPassword();
-    permissionStatus = login.getCustomer().getPermissionStatus().getCod();
   }
 
   public static List<LoginDto> convertList(List<Login> logins) {
     return logins.stream().map(LoginDto::new).collect(Collectors.toList());
   }
 
-  public PermissionStatus getPermissionStatus() {
-    return PermissionStatus.toEnum(permissionStatus);
-  }
-
-  public void setPermissionStatus(PermissionStatus permissionStatus) {
-    this.permissionStatus = permissionStatus.getCod();
-  }
 }

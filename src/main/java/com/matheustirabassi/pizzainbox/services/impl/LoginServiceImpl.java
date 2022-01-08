@@ -32,7 +32,6 @@ public class LoginServiceImpl extends GenericServiceImpl<Login> implements Login
       Login login = fromDto(dto);
       Customer customer = customerRepository.findById(customerId).orElse(null);
       customer.setLogin(login);
-      customer.setPermissionStatus(dto.getPermissionStatus());
       login.setCustomer(customer);
       saveOrUpdate(login);
       customerRepository.save(customer);

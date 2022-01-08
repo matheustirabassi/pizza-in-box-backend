@@ -1,5 +1,6 @@
 package com.matheustirabassi.pizzainbox.services.impl;
 
+import com.matheustirabassi.pizzainbox.dao.CityRepository;
 import com.matheustirabassi.pizzainbox.dao.CustomerRepository;
 import com.matheustirabassi.pizzainbox.dao.GenericRepository;
 import com.matheustirabassi.pizzainbox.domain.Address;
@@ -27,6 +28,9 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
 
   @Autowired
   private CustomerRepository customerRepository;
+
+  @Autowired
+  private CityRepository cityRepository;
 
   public CustomerDto findByNome(String nome) {
     Optional<Customer> obj = customerRepository.findByName(nome);
@@ -64,18 +68,9 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   public Customer fromDto(NewCustomerDto dto) {
     Customer customer = ObjectMapperUtils.map(dto, Customer.class);
     customer.getLogin().setCustomer(customer);
-    customer.getLogin().setUsername(dto.getLogin().getUser());
-    State state = new State();
-    state.setName(dto.getAddresses().get(0).getState());
-
-    City city = new City(dto.getAddresses().get(0).getCity(), state);
-    state.getCities().add(city);
-    Address address = ObjectMapperUtils.map(dto.getAddresses().get(0), Address.class);
-    address.setCity(city);
-    address.setCustomer(customer);
-
-    customer.setAddresses(List.of(address));
-
+    for (Address address : customer.getAddresses()) {
+      address.setCustomer(customer);
+    }
     return customer;
   }
 
@@ -87,8 +82,9 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
    */
   public Address fromEnderecoDto(AddressDto addressDto) {
     State state = new State();
-    state.setName(addressDto.getState());
-    City city = new City(addressDto.getCity(), state);
+    state.setId(addressDto.getCity());
+    City city = new City();
+    city.setId(addressDto.getCity());
     state.getCities().add(city);
 
     return new Address(addressDto.getStreet(), addressDto.getNumber(),

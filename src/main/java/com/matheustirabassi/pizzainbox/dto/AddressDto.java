@@ -20,8 +20,7 @@ public class AddressDto implements Serializable {
   private String complement;
   private String district;
   private String cep;
-  private String city;
-  private String state;
+  private Long city;
 
   public AddressDto(Address address) {
     this.id = address.getId();
@@ -30,8 +29,7 @@ public class AddressDto implements Serializable {
     this.complement = address.getComplement();
     this.district = address.getDistrict();
     this.cep = address.getCep();
-    this.city = address.getCity().getName();
-    this.state = address.getCity().getState().getName();
+    this.city = address.getCity().getId();
   }
 
   public static List<AddressDto> convertList(List<Address> addresses) {
