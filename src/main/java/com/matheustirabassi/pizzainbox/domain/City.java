@@ -25,7 +25,7 @@ public class City extends BaseEntity {
   private String name;
 
   @ToString.Exclude
-  @ManyToOne(cascade = CascadeType.ALL)
+  @ManyToOne(cascade = CascadeType.PERSIST)
   @JoinColumn(name = "state_id")
   private State state;
 }

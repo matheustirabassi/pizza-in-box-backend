@@ -6,15 +6,15 @@ import org.springframework.data.domain.Pageable;
 
 public interface GenericService<T> {
 
-  public T saveOrUpdate(T entity);
+  T saveOrUpdate(T entity);
 
-  public void delete(T entity);
+  void delete(T entity);
 
-  public T findById(Long id);
+  T findById(Long id);
 
-  public Page<T> findWithPagination(Pageable pageable);
+  Page<T> findWithPagination(Pageable pageable);
 
-  public List<T> findAll();
+  List<T> findAll();
 
   void deleteById(Long id);
 }

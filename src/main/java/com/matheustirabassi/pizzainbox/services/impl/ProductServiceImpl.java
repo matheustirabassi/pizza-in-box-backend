@@ -17,7 +17,7 @@ public class ProductServiceImpl extends GenericServiceImpl<Product> implements P
   private ProductRepository productRepository;
 
   @Override
-  protected GenericRepository<Product> getDAO() {
+  protected GenericRepository<Product> getDao() {
     return productRepository;
   }
 

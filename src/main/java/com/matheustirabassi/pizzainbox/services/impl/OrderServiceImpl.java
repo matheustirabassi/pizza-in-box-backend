@@ -14,7 +14,7 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
   private OrderRepository orderRepository;
 
   @Override
-  protected GenericRepository<Order> getDAO() {
+  protected GenericRepository<Order> getDao() {
     return orderRepository;
   }
 

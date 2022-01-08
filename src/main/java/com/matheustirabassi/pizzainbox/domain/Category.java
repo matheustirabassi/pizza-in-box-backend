@@ -3,7 +3,6 @@ package com.matheustirabassi.pizzainbox.domain;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import lombok.Data;
@@ -20,7 +19,7 @@ public class Category extends BaseEntity {
 
   private String name;
 
-  @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
+  @ManyToMany(mappedBy = "categories")
   private List<Product> products = new ArrayList<>();
 
 }

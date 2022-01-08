@@ -50,7 +50,7 @@ public class ProductController {
   public ResponseEntity<Void> update(@RequestBody ProductDto objDTO, @PathVariable Long id) {
     Product obj = service.fromDto(objDTO);
     obj.setId(id);
-    obj = service.saveOrUpdate(obj);
+    service.saveOrUpdate(obj);
     return ResponseEntity.noContent().build();
 
   }

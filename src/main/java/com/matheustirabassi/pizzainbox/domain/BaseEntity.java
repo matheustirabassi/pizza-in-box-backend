@@ -10,12 +10,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.Setter;
 
 @MappedSuperclass
 @NoArgsConstructor
@@ -28,13 +25,9 @@ public abstract class BaseEntity {
 
   @NonNull
   @Temporal(TemporalType.TIMESTAMP)
-  @Getter(value = AccessLevel.PRIVATE)
-  @Setter(value = AccessLevel.PRIVATE)
   private Date creationDate;
 
   @Temporal(TemporalType.TIMESTAMP)
-  @Getter(value = AccessLevel.PRIVATE)
-  @Setter(value = AccessLevel.PRIVATE)
   private Date modificationDate;
 
   protected BaseEntity(@NonNull Date creationDate, Date modificationDate) {

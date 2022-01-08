@@ -23,19 +23,6 @@ services:
     networks:
       - mysql-network
 
-  app:
-    build: .
-    command: mvn spring-boot:run -Dspring-boot.run.profiles=devdocker -Dmaven.test.skip=true
-    restart: on-failure
-    ports:
-      - "8082:8080"
-    volumes:
-      - app:/app
-    networks:
-      - mysql-network
-    depends_on:
-      - db
-
 networks:
   mysql-network:
 

@@ -27,11 +27,6 @@ public class LoginServiceImpl extends GenericServiceImpl<Login> implements Login
     return obj.orElse(null);
   }
 
-  @Override
-  public Login saveOrUpdate(Login login) {
-    return loginRepository.save(login);
-  }
-
   public LoginDto saveLoginWithClienteId(LoginDto dto, Long customerId) {
     try {
       Login login = fromDto(dto);
@@ -48,7 +43,7 @@ public class LoginServiceImpl extends GenericServiceImpl<Login> implements Login
   }
 
   @Override
-  protected GenericRepository<Login> getDAO() {
+  protected GenericRepository<Login> getDao() {
     return loginRepository;
   }
 
