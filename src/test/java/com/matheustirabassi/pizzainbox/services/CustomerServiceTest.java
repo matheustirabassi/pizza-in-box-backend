@@ -8,7 +8,7 @@ import com.matheustirabassi.pizzainbox.dao.CustomerRepository;
 import com.matheustirabassi.pizzainbox.dao.LoginRepository;
 import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewLoginDto;
-import com.matheustirabassi.pizzainbox.services.exceptions.DataIntegrityException;
+import com.matheustirabassi.pizzainbox.services.exceptions.ServiceException;
 import com.matheustirabassi.pizzainbox.services.impl.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -68,7 +68,7 @@ class CustomerServiceTest {
     NewCustomerDto customer = new NewCustomerDto();
     customer.setEmail(existingEmail);
 
-    Exception exception = assertThrows(DataIntegrityException.class,
+    Exception exception = assertThrows(ServiceException.class,
         () -> customerService.save(customer));
     String expectedMessage = "Esse email já existe!";
     assertTrue(
@@ -86,7 +86,7 @@ class CustomerServiceTest {
     loginDto.setUser(existingUsername);
     customer.setLogin(loginDto);
 
-    Exception exception = assertThrows(DataIntegrityException.class,
+    Exception exception = assertThrows(ServiceException.class,
         () -> customerService.save(customer));
     String expectedMessage = "Esse nome de usuário já existe!";
     assertTrue(

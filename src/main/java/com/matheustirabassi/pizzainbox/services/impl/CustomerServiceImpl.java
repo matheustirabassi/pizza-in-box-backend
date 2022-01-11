@@ -12,8 +12,8 @@ import com.matheustirabassi.pizzainbox.dto.AddressDto;
 import com.matheustirabassi.pizzainbox.dto.CustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
 import com.matheustirabassi.pizzainbox.services.CustomerService;
-import com.matheustirabassi.pizzainbox.services.exceptions.DataIntegrityException;
 import com.matheustirabassi.pizzainbox.services.exceptions.ObjectNotFoundException;
+import com.matheustirabassi.pizzainbox.services.exceptions.ServiceException;
 import com.matheustirabassi.pizzainbox.utils.ObjectMapperUtils;
 import java.util.List;
 import java.util.Optional;
@@ -128,7 +128,7 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   @Override
   public void updateCustomer(CustomerDto customerDto) {
     if (customerRepository.findByEmailExists(customerDto.getEmail())) {
-      throw new DataIntegrityException("Esse email já existe!");
+      throw new ServiceException("Esse email já existe!");
     }
     Customer customerPersistence = findById(customerDto.getId());
     updateData(customerPersistence, ObjectMapperUtils.map(customerDto, Customer.class));
@@ -141,13 +141,13 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   }
 
   public Customer save(NewCustomerDto dto) {
-    
+
     if (customerRepository.findByEmailExists(dto.getEmail())) {
-      throw new DataIntegrityException("Esse email já existe!");
+      throw new ServiceException("Esse email já existe!");
     }
     if (loginRepository.findByUsernameExists(
         dto.getLogin().getUser())) {
-      throw new DataIntegrityException("Esse nome de usuário já existe!");
+      throw new ServiceException("Esse nome de usuário já existe!");
     }
     return saveOrUpdate(fromDto(dto));
   }
