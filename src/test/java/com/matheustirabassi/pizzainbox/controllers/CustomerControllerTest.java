@@ -86,7 +86,7 @@ class CustomerControllerTest {
 
   @Test
   @DisplayName("Insere um cliente válido no sistema")
-  void insert_AllValid_Sucess() throws Exception {
+  void insertTest_AllValid_Sucess() throws Exception {
     when(customerService.save(any(NewCustomerDto.class))).thenReturn(customer);
     validateMock(newCustomerDto);
     ResponseEntity<?> response = customerController.insert(newCustomerDto);
@@ -98,7 +98,7 @@ class CustomerControllerTest {
 
   @Test
   @DisplayName("Insere um cliente com documento inválido")
-  void insert_DocumentInvalid_ValidationException() throws Exception {
+  void insertTest_DocumentInvalid_ValidationException() throws Exception {
     String invalidDocument = "1";
     newCustomerDto.setDocument(invalidDocument);
     assertThrows(ValidationException.class, () -> validateMock(newCustomerDto));
