@@ -1,6 +1,5 @@
 package com.matheustirabassi.pizzainbox.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,7 +24,7 @@ public class City extends BaseEntity {
   private String name;
 
   @ToString.Exclude
-  @ManyToOne(cascade = CascadeType.PERSIST)
+  @ManyToOne
   @JoinColumn(name = "state_id")
   private State state;
 }

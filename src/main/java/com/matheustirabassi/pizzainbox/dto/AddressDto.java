@@ -4,6 +4,7 @@ import com.matheustirabassi.pizzainbox.domain.Address;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -19,9 +20,13 @@ public class AddressDto implements Serializable {
   private String number;
   private String complement;
   private String district;
+  @NotEmpty(message = "Preenchimento obrigatório")
   private String cep;
-  private String city;
-  private String state;
+  @NotEmpty(message = "Preenchimento obrigatório")
+  private Long city;
+
+  public AddressDto() {
+  }
 
   public AddressDto(Address address) {
     this.id = address.getId();
@@ -30,8 +35,7 @@ public class AddressDto implements Serializable {
     this.complement = address.getComplement();
     this.district = address.getDistrict();
     this.cep = address.getCep();
-    this.city = address.getCity().getName();
-    this.state = address.getCity().getState().getName();
+    this.city = address.getCity().getId();
   }
 
   public static List<AddressDto> convertList(List<Address> addresses) {
