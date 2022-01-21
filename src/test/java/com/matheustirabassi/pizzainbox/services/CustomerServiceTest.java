@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.matheustirabassi.pizzainbox.dao.CustomerRepository;
 import com.matheustirabassi.pizzainbox.dao.LoginRepository;
+import com.matheustirabassi.pizzainbox.dto.CustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewLoginDto;
 import com.matheustirabassi.pizzainbox.services.exceptions.ServiceException;
@@ -35,20 +36,8 @@ class CustomerServiceTest {
   public void setUp() {
     MockitoAnnotations.openMocks(this);
   }
-
-  @Test
-  void fromDto() {
-  }
-
-  @Test
-  void fromEnderecoDto() {
-  }
-
-  @Test
-  void updateCustomer() {
-  }
-
-  //region SaveTests
+  
+  // region Save Tests
 
   @Test
   @DisplayName("Envia um cliente válido e salva o cliente")
@@ -60,8 +49,8 @@ class CustomerServiceTest {
   }
 
   @Test
-  @DisplayName("Envia um cliente com e-mail existente e lança exceção")
-  void saveTest_EmailAlreadyExists_DataIntegrityException() {
+  @DisplayName("Tenta salvar um cliente com e-mail existente e lança exceção")
+  void saveTest_EmailAlreadyExists_ServiceException() {
     final String existingEmail = "email@email.com";
     when(customerRepository.findByEmailExists(existingEmail)).thenReturn(true);
 
@@ -76,8 +65,8 @@ class CustomerServiceTest {
   }
 
   @Test
-  @DisplayName("Envia um cliente com e-mail existente e lança exceção")
-  void saveTest_LoginAlreadyExists_DataIntegrityException() {
+  @DisplayName("Tenta salvar um um cliente com login existente e lança exceção")
+  void saveTest_LoginAlreadyExists_ServiceException() {
     final String existingUsername = "email@email.com";
     when(loginRepository.findByUsernameExists(existingUsername)).thenReturn(true);
 
@@ -93,5 +82,25 @@ class CustomerServiceTest {
         exception.getMessage().contains(expectedMessage));
   }
 
-  //endregion
+  // endregion
+
+  // region updateCustomer tests
+
+  @Test
+  @DisplayName("Atualiza um cliente com e-mail existente e lança exceção")
+  void updateCustomerTest_EmailAlreadyExists_ServiceException() {
+    final String existingEmail = "email@email.com";
+    when(customerRepository.findByEmailExists(existingEmail)).thenReturn(true);
+
+    CustomerDto customer = new CustomerDto();
+    customer.setEmail(existingEmail);
+
+    Exception exception = assertThrows(ServiceException.class,
+        () -> customerService.updateCustomer(customer));
+    String expectedMessage = "Esse email já existe!";
+    assertTrue(
+        exception.getMessage().contains(expectedMessage));
+  }
+
+  // endregion
 }

@@ -1,6 +1,5 @@
 package com.matheustirabassi.pizzainbox.services.impl;
 
-import com.matheustirabassi.pizzainbox.dao.CityRepository;
 import com.matheustirabassi.pizzainbox.dao.CustomerRepository;
 import com.matheustirabassi.pizzainbox.dao.GenericRepository;
 import com.matheustirabassi.pizzainbox.dao.LoginRepository;
@@ -32,16 +31,19 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   private CustomerRepository customerRepository;
 
   @Autowired
-  private CityRepository cityRepository;
-
-  @Autowired
   private LoginRepository loginRepository;
 
+  /**
+   * Faz a busca por nome.
+   *
+   * @param nome o nome a ser procurado.
+   * @return o dto do cliente encontrado.
+   */
   public CustomerDto findByNome(String nome) {
+    log.info("Buscando o cliente pelo nome...");
     Optional<Customer> obj = customerRepository.findByName(nome);
-    CustomerDto customerDto = new CustomerDto(
+    return new CustomerDto(
         obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado!")));
-    return customerDto;
   }
 
   /**
@@ -53,8 +55,8 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   @Override
   @Transactional(readOnly = true)
   public Page<CustomerDto> findAllWithPagination(Pageable pageable) {
-    Page<Customer> result = getDao().findAll(pageable);
     log.info("Buscando todos os clientes por paginação...");
+    Page<Customer> result = getDao().findAll(pageable);
     return result.map(CustomerDto::new);
   }
 
@@ -106,6 +108,7 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   @Transactional
   @Override
   public Customer insertAddress(Long id, AddressDto addressDto) {
+    log.info("Inserindo o endereço...");
     // TODO: o id do endereço não deve ser necessariamente ser setado
     addressDto.setId(null);
     Customer obj = findById(id);
@@ -118,15 +121,16 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
   @Transactional(readOnly = true)
   @Override
   public CustomerDto findByDocument(String text) {
-    CustomerDto customerDto = new CustomerDto(
+    log.info("Buscando o cpf...");
+    return new CustomerDto(
         customerRepository.findCustomerAddressesByDocument(text)
             .orElseThrow(() -> new ObjectNotFoundException("Cliente Não encontrado")));
-    return customerDto;
   }
 
   @Transactional
   @Override
   public void updateCustomer(CustomerDto customerDto) {
+    log.info("Atualizando cliente...");
     if (customerRepository.findByEmailExists(customerDto.getEmail())) {
       throw new ServiceException("Esse email já existe!");
     }
@@ -140,8 +144,14 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
     customer.setEmail(newCustomer.getEmail());
   }
 
+  /**
+   * Salva o cliente a partir do dto.
+   *
+   * @param dto o Dto do cliente para inserção.
+   * @return o cliente.
+   */
   public Customer save(NewCustomerDto dto) {
-
+    log.info("Salvando cliente...");
     if (customerRepository.findByEmailExists(dto.getEmail())) {
       throw new ServiceException("Esse email já existe!");
     }

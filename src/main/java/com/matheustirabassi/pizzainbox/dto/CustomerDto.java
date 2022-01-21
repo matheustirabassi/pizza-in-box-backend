@@ -32,6 +32,11 @@ public class CustomerDto implements Serializable {
   public CustomerDto() {
   }
 
+  /**
+   * Converte Entidade cliente para dto.
+   *
+   * @param customer o cliente
+   */
   public CustomerDto(Customer customer) {
     id = customer.getId();
     name = customer.getName();
