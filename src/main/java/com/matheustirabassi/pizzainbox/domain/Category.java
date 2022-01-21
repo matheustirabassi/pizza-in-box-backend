@@ -2,6 +2,7 @@ package com.matheustirabassi.pizzainbox.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -19,7 +20,7 @@ public class Category extends BaseEntity {
 
   private String name;
 
-  @ManyToMany(mappedBy = "categories")
+  @ManyToMany(mappedBy = "categories", cascade = CascadeType.PERSIST)
   private List<Product> products = new ArrayList<>();
 
 }

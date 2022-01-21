@@ -141,6 +141,7 @@
 						</exclude>
 					</excludes>
 					<excludeDevtools>false</excludeDevtools>
+					<jvmArguments>-Xmx2048m -XX:NativeMemoryTracking=summary --enable-preview</jvmArguments>
 				</configuration>
 			</plugin>
 		</plugins>

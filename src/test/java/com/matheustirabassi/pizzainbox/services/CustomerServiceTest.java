@@ -14,13 +14,10 @@ import com.matheustirabassi.pizzainbox.services.impl.CustomerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
 
   @Mock
@@ -36,7 +33,7 @@ class CustomerServiceTest {
   public void setUp() {
     MockitoAnnotations.openMocks(this);
   }
-  
+
   // region Save Tests
 
   @Test
