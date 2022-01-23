@@ -29,7 +29,7 @@ public class Order extends BaseEntity {
 
   @Temporal(TemporalType.TIMESTAMP)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-  private Date instante;
+  private Date instant;
 
   @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
   private Payment payment;
@@ -43,7 +43,7 @@ public class Order extends BaseEntity {
   private Address deliveryAddress;
 
   @OneToMany(mappedBy = "id.order", fetch = FetchType.EAGER)
-  private Set<OrderItem> itens = new HashSet<>();
+  private Set<OrderItem> items = new HashSet<>();
 
   private Integer orderStatus;
 
@@ -64,7 +64,7 @@ public class Order extends BaseEntity {
    */
   public Double getTotal() {
     double sum = 0.0;
-    for (OrderItem x : itens) {
+    for (OrderItem x : items) {
       sum += x.getSubTotal();
     }
     return sum;

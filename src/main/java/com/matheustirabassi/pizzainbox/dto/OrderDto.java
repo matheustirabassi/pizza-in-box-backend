@@ -21,15 +21,15 @@ public class OrderDto implements Serializable {
   private static final long serialVersionUID = 1L;
 
   private Long id;
-  private Date instante;
+  private Date instant;
   private Address deliveryAddress;
-  private Set<OrderItem> itens = new HashSet<>();
+  private Set<OrderItem> items = new HashSet<>();
 
   public OrderDto(Order order) {
     this.id = order.getId();
-    this.instante = order.getInstante();
+    this.instant = order.getInstant();
     this.deliveryAddress = order.getDeliveryAddress();
-    this.itens = order.getItens();
+    this.items = order.getItems();
   }
 
   public static List<OrderDto> convert(List<Order> orders) {

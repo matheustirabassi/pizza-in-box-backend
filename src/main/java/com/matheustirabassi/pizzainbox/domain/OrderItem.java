@@ -29,6 +29,14 @@ public class OrderItem {
     id.setOrder(order);
   }
 
+  public Product getProduct() {
+    return id.getProduct();
+  }
+
+  public void setProduct(Product product) {
+    id.setProduct(product);
+  }
+
   public Double getSubTotal() {
     return (price - discount) * amount;
   }

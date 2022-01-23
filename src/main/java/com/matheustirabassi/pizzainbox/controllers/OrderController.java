@@ -2,7 +2,8 @@ package com.matheustirabassi.pizzainbox.controllers;
 
 import com.matheustirabassi.pizzainbox.domain.Order;
 import com.matheustirabassi.pizzainbox.dto.OrderDto;
-import com.matheustirabassi.pizzainbox.services.impl.OrderServiceImpl;
+import com.matheustirabassi.pizzainbox.services.OrderService;
+import java.net.URI;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping(value = "/pedidos")
+@RequestMapping(value = "/orders")
 public class OrderController {
 
   @Autowired
-  private OrderServiceImpl service;
+  private OrderService service;
 
   @GetMapping(value = "{id}")
   public ResponseEntity<OrderDto> findById(@PathVariable Long id) {
@@ -34,7 +36,9 @@ public class OrderController {
 
   @PostMapping
   public ResponseEntity<OrderDto> insert(@RequestBody Order order) {
-    OrderDto orderDto = new OrderDto(service.saveOrUpdate(order));
-    return ResponseEntity.ok(orderDto);
+    Order orderReturned = service.insertOrder(order);
+    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+        .buildAndExpand(orderReturned.getId()).toUri();
+    return ResponseEntity.created(uri).build();
   }
 }

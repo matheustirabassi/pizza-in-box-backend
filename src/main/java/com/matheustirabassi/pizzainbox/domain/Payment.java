@@ -1,6 +1,7 @@
 package com.matheustirabassi.pizzainbox.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.matheustirabassi.pizzainbox.domain.enums.PaymentStatus;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -15,6 +16,7 @@ import lombok.EqualsAndHashCode;
 /**
  * Super classe dos tipos de pagamento.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
