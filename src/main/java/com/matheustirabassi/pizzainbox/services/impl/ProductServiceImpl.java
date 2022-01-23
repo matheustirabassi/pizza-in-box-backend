@@ -53,7 +53,8 @@ public class ProductServiceImpl extends GenericServiceImpl<Product> implements P
 
   public Page<Product> searchProducts(String name, List<Long> ids, Pageable pageable) {
     List<Category> categories = categoryRepository.findAllById(ids);
-    return productRepository.searchProducts(name, categories, pageable);
+    return productRepository.findDistinctByNameContainingAndCategoriesIn(name, categories,
+        pageable);
   }
 
   @Transactional
