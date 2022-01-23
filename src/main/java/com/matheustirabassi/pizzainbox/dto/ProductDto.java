@@ -1,6 +1,7 @@
 package com.matheustirabassi.pizzainbox.dto;
 
 import com.matheustirabassi.pizzainbox.domain.Product;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class ProductDto implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   private Long id;
@@ -20,6 +22,11 @@ public class ProductDto implements Serializable {
   private Double price;
   private String description;
 
+  /**
+   * Converte produto para dto.
+   *
+   * @param product o produto.
+   */
   public ProductDto(Product product) {
     this.id = product.getId();
     this.name = product.getName();

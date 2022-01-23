@@ -1,5 +1,6 @@
 package com.matheustirabassi.pizzainbox.controllers;
 
+import com.matheustirabassi.pizzainbox.controllers.utils.Url;
 import com.matheustirabassi.pizzainbox.domain.Product;
 import com.matheustirabassi.pizzainbox.dto.ProductDto;
 import com.matheustirabassi.pizzainbox.services.impl.ProductServiceImpl;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping(value = "/produtos")
+@RequestMapping(value = "/products")
 public class ProductController {
 
   @Autowired
@@ -61,5 +62,19 @@ public class ProductController {
     URI uri =
         ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
     return ResponseEntity.created(uri).build();
+  }
+
+  @GetMapping(value = "/findByName")
+  public ResponseEntity<Page<ProductDto>> findAll(String name, String categories,
+      Pageable pageable) {
+    Page<ProductDto> productDtos = service.searchProducts(Url.decoreParam(name),
+        Url.decoreIntList(categories), pageable).map(ProductDto::new);
+    return ResponseEntity.ok(productDtos);
+  }
+
+  @PostMapping(value = "{id}/addCategory")
+  public ResponseEntity<Void> addProductCategory(@PathVariable Long id, String categories) {
+    service.addProductCategory(id, Url.decoreIntList(categories));
+    return ResponseEntity.noContent().build();
   }
 }
