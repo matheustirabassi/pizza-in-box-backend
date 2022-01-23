@@ -57,6 +57,11 @@ public class Order extends BaseEntity {
     }
   }
 
+  /**
+   * Calcula o total do pedido.
+   *
+   * @return o valor total do pedido.
+   */
   public Double getTotal() {
     double sum = 0.0;
     for (OrderItem x : itens) {

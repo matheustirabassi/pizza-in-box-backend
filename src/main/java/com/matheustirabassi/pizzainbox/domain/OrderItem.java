@@ -30,7 +30,7 @@ public class OrderItem {
   }
 
   public Double getSubTotal() {
-    return price * amount;
+    return (price - discount) * amount;
   }
 
   @Override
