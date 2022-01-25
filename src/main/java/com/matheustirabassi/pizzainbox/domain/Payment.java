@@ -21,7 +21,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "tb_payment")
+@Table(name = "payment")
 public abstract class Payment extends BaseEntity {
 
   private Integer paymentStatus;

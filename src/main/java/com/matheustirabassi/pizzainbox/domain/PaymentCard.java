@@ -8,7 +8,7 @@ import lombok.Data;
 @JsonTypeName("paymentCard")
 @Data
 @Entity
-@Table(name = "tb_payment_payment_card")
+@Table(name = "payment_payment_card")
 public class PaymentCard extends Payment {
 
   private Integer numberInstallments;

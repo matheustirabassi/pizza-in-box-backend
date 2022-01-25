@@ -4,8 +4,9 @@ import com.matheustirabassi.pizzainbox.domain.Order;
 import com.matheustirabassi.pizzainbox.dto.OrderDto;
 import com.matheustirabassi.pizzainbox.services.OrderService;
 import java.net.URI;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,14 +25,12 @@ public class OrderController {
 
   @GetMapping(value = "{id}")
   public ResponseEntity<OrderDto> findById(@PathVariable Long id) {
-    OrderDto obj = new OrderDto(service.findById(id));
-    return ResponseEntity.ok().body(obj);
+    return ResponseEntity.ok().body(service.findByOrderId(id));
   }
 
   @GetMapping
-  public ResponseEntity<List<OrderDto>> findAll() {
-    List<Order> orders = service.findAll();
-    return ResponseEntity.ok().body(OrderDto.convert(orders));
+  public ResponseEntity<Page<OrderDto>> findAll(Pageable pageable) {
+    return ResponseEntity.ok().body(service.findAll(pageable));
   }
 
   @PostMapping

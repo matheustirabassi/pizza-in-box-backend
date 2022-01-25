@@ -8,11 +8,14 @@ import com.matheustirabassi.pizzainbox.domain.Order;
 import com.matheustirabassi.pizzainbox.domain.OrderItem;
 import com.matheustirabassi.pizzainbox.domain.PaymentBankSlip;
 import com.matheustirabassi.pizzainbox.domain.enums.PaymentStatus;
+import com.matheustirabassi.pizzainbox.dto.OrderDto;
 import com.matheustirabassi.pizzainbox.services.OrderService;
 import com.matheustirabassi.pizzainbox.services.PaymentBankSlipService;
 import com.matheustirabassi.pizzainbox.services.ProductService;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,10 +58,25 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     paymentRepository.save(order.getPayment());
 
     for (OrderItem orderItem : order.getItems()) {
+      orderItem.setDiscount(0.0);
       orderItem.setPrice(productService.findById(orderItem.getProduct().getId()).getPrice());
       orderItem.setOrder(order);
     }
     ordemItemRepository.saveAll(order.getItems());
     return order;
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public OrderDto findByOrderId(Long id) {
+    OrderDto orderDto = new OrderDto(findById(id));
+    return orderDto;
+  }
+
+  @Transactional(readOnly = true)
+  @Override
+  public Page<OrderDto> findAll(Pageable pageable) {
+    Page<OrderDto> orderDtoPage = findWithPagination(pageable).map(OrderDto::new);
+    return orderDtoPage;
   }
 }

@@ -5,10 +5,11 @@ import com.matheustirabassi.pizzainbox.domain.pk.OrderItemPK;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@Table(name = "tb_order_item")
+
+@Table(name = "order_item")
 @Entity
 public class OrderItem {
 
@@ -16,8 +17,16 @@ public class OrderItem {
   @EmbeddedId
   private OrderItemPK id = new OrderItemPK();
 
+  @Getter
+  @Setter
   private Double discount;
+
+  @Getter
+  @Setter
   private Integer amount;
+
+  @Getter
+  @Setter
   private Double price;
 
   @JsonIgnore
@@ -70,5 +79,4 @@ public class OrderItem {
     }
     return true;
   }
-
 }

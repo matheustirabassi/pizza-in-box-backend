@@ -36,7 +36,7 @@ class OrderControllerTest {
 
   @Test
   void insertTest_AllValid_Sucess() {
-    when(orderService.saveOrUpdate(any(Order.class))).thenReturn(order);
+    when(orderService.insertOrder(any(Order.class))).thenReturn(order);
     orderController.insert(order);
   }
 }

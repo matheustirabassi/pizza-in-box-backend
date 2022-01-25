@@ -34,7 +34,7 @@ import org.hibernate.annotations.FetchMode;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "tb_customer")
+@Table(name = "customer")
 public class Customer extends BaseEntity {
 
   private String name;
@@ -46,7 +46,7 @@ public class Customer extends BaseEntity {
   private Integer permissionStatus = PermissionStatus.CUSTOMER.getCod();
 
   @ElementCollection
-  @CollectionTable(name = "tb_cellphone")
+  @CollectionTable(name = "cellphone")
   @Fetch(FetchMode.JOIN)
   private Set<String> cellphones = new HashSet<>();
 
