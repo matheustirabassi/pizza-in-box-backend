@@ -2,6 +2,7 @@ package com.matheustirabassi.pizzainbox.domain.pk;
 
 import com.matheustirabassi.pizzainbox.domain.Order;
 import com.matheustirabassi.pizzainbox.domain.Product;
+import java.io.Serial;
 import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
@@ -14,6 +15,7 @@ import lombok.Setter;
 @Embeddable
 public class OrderItemPK implements Serializable {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   @ManyToOne

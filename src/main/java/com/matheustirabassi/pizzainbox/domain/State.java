@@ -15,7 +15,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "tb_state")
+@Table(name = "state")
 public class State extends BaseEntity {
 
   private String name;

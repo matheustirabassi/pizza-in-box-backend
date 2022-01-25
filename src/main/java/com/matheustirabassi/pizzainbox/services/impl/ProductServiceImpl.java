@@ -51,6 +51,14 @@ public class ProductServiceImpl extends GenericServiceImpl<Product> implements P
         .build();
   }
 
+  /**
+   * Procura prdutos relacionados à categorias.
+   *
+   * @param name     o nome do produto.
+   * @param ids      os ids das categorias.
+   * @param pageable a paginação.
+   * @return a paginação de produtos.
+   */
   public Page<Product> searchProducts(String name, List<Long> ids, Pageable pageable) {
     List<Category> categories = categoryRepository.findAllById(ids);
     return productRepository.findDistinctByNameContainingAndCategoriesIn(name, categories,

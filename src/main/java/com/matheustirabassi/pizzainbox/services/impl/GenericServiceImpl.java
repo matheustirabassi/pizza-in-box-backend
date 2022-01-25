@@ -39,13 +39,13 @@ public abstract class GenericServiceImpl<T> implements GenericService<T> {
   }
 
   @Override
-  @Transactional
+  @Transactional(readOnly = true)
   public List<T> findAll() {
     return getDao().findAll();
   }
 
   @Override
-  @Transactional
+  @Transactional(readOnly = true)
   public T findById(Long id) {
     Optional<T> obj = getDao().findById(id);
     return obj.orElseThrow(() -> new ObjectNotFoundException(
