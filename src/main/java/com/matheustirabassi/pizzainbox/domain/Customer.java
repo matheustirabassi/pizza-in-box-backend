@@ -14,6 +14,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -26,11 +28,13 @@ import org.hibernate.annotations.FetchMode;
 /**
  * Principal classe do projeto.
  */
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "tb_customer")
+@Table(name = "customer")
 public class Customer extends BaseEntity {
 
   private String name;
@@ -39,10 +43,10 @@ public class Customer extends BaseEntity {
   @NonNull
   private String document;
   private Integer documentType;
-  private Integer permissionStatus;
+  private Integer permissionStatus = PermissionStatus.CUSTOMER.getCod();
 
   @ElementCollection
-  @CollectionTable(name = "tb_cellphone")
+  @CollectionTable(name = "cellphone")
   @Fetch(FetchMode.JOIN)
   private Set<String> cellphones = new HashSet<>();
 

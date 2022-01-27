@@ -2,6 +2,8 @@ package com.matheustirabassi.pizzainbox.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.matheustirabassi.pizzainbox.domain.enums.OrderStatus;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,31 +23,34 @@ import lombok.EqualsAndHashCode;
 /**
  * Classe de pedido para os produtos
  */
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Data
 @Entity
-@Table(name = "tb_order")
-public class Order extends BaseEntity {
+@Table(name = "`order`")
+public class Order extends BaseEntity implements Serializable {
+
+  @Serial
+  private static final long serialVersionUID = 1L;
 
   @Temporal(TemporalType.TIMESTAMP)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-  private Date instante;
+  private Date instant;
 
   @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
   private Payment payment;
 
   @ManyToOne
-  @JoinColumn(name = "cliente_id")
+  @JoinColumn(name = "customer_id")
   private Customer customer;
 
   @ManyToOne
-  @JoinColumn(name = "delivery_address_Id")
+  @JoinColumn(name = "delivery_address_id")
   private Address deliveryAddress;
 
   @OneToMany(mappedBy = "id.order", fetch = FetchType.EAGER)
-  private Set<OrderItem> itens = new HashSet<>();
+  private Set<OrderItem> items = new HashSet<>();
 
-  private Integer orderStatus;
+  private Integer orderStatus = OrderStatus.WAITING_PAYMENT.getCode();
 
   public OrderStatus getOrderStatus() {
     return OrderStatus.valueOf(orderStatus);
@@ -57,9 +62,14 @@ public class Order extends BaseEntity {
     }
   }
 
+  /**
+   * Calcula o total do pedido.
+   *
+   * @return o valor total do pedido.
+   */
   public Double getTotal() {
     double sum = 0.0;
-    for (OrderItem x : itens) {
+    for (OrderItem x : items) {
       sum += x.getSubTotal();
     }
     return sum;

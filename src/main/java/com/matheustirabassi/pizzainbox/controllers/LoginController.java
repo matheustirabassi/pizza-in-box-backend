@@ -1,7 +1,7 @@
 package com.matheustirabassi.pizzainbox.controllers;
 
 import com.matheustirabassi.pizzainbox.domain.Login;
-import com.matheustirabassi.pizzainbox.dto.LoginDto;
+import com.matheustirabassi.pizzainbox.dto.NewLoginDto;
 import com.matheustirabassi.pizzainbox.services.LoginService;
 import java.util.List;
 import java.util.Optional;
@@ -38,13 +38,13 @@ public class LoginController {
 
 
   @GetMapping
-  public ResponseEntity<List<LoginDto>> findAll() {
-    List<LoginDto> logins = service.findAllWithCliente();
+  public ResponseEntity<List<NewLoginDto>> findAll() {
+    List<NewLoginDto> logins = service.findAllWithCliente();
     return ResponseEntity.ok().body(logins);
   }
 
   @PostMapping
-  public ResponseEntity<LoginDto> insert(@RequestBody LoginDto obj) {
+  public ResponseEntity<NewLoginDto> insert(@RequestBody NewLoginDto obj) {
     obj.setPassword(getPasswordEncoder().encode(obj.getPassword()));
     return ResponseEntity.ok(obj);
   }

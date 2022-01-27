@@ -20,7 +20,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "tb_login")
+@Table(name = "login")
 public class Login extends BaseEntity {
 
   @Column(unique = true)

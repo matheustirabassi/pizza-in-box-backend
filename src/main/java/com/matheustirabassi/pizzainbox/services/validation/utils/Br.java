@@ -1,9 +1,7 @@
-package com.matheustirabassi.pizzainbox.services.validation;
+package com.matheustirabassi.pizzainbox.services.validation.utils;
 
-/**
- * Classe de validação de documentos para o Brasil.
- */
-public class BrazilValidation {
+// Fonte: https://gist.github.com/adrianoluis/5043397d378ae506d87366abb0ab4e30
+public class Br {
 
   // CPF
   private static final int[] weightSsn = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
@@ -22,35 +20,34 @@ public class BrazilValidation {
   }
 
   /**
-   * Valida o CPF.
+   * Valida CPF
    *
-   * @param ssn O CPF.
-   * @return O resultado da validação do CPF.
+   * @param ssn
+   * @return
    */
   public static boolean isValidCPF(final String ssn) {
     if ((ssn == null) || (ssn.length() != 11) || ssn.matches(ssn.charAt(0) + "{11}")) {
       return false;
     }
 
-    final int digit1 = calculate(ssn.substring(0, 9), weightSsn);
-    final int digit2 = calculate(ssn.substring(0, 9) + digit1, weightSsn);
-    return ssn.equals(ssn.substring(0, 9) + Integer.toString(digit1) + Integer.toString(digit2));
+    final Integer digit1 = calculate(ssn.substring(0, 9), weightSsn);
+    final Integer digit2 = calculate(ssn.substring(0, 9) + digit1, weightSsn);
+    return ssn.equals(ssn.substring(0, 9) + digit1.toString() + digit2.toString());
   }
 
   /**
-   * Valida CNPJ.
+   * Valida CNPJ
    *
-   * @param tin o CNPJ
-   * @return a validação do CNPJ
+   * @param tin
+   * @return
    */
   public static boolean isValidCNPJ(final String tin) {
     if ((tin == null) || (tin.length() != 14) || tin.matches(tin.charAt(0) + "{14}")) {
       return false;
     }
 
-    final int digit1 = calculate(tin.substring(0, 12), weightTin);
-    final int digit2 = calculate(tin.substring(0, 12) + digit1, weightTin);
-    return tin.equals(tin.substring(0, 12) + Integer.toString(digit1) + Integer.toString(digit2));
+    final Integer digit1 = calculate(tin.substring(0, 12), weightTin);
+    final Integer digit2 = calculate(tin.substring(0, 12) + digit1, weightTin);
+    return tin.equals(tin.substring(0, 12) + digit1.toString() + digit2.toString());
   }
-
 }

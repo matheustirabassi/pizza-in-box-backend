@@ -1,6 +1,5 @@
 package com.matheustirabassi.pizzainbox.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +16,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "tb_address")
+@Table(name = "address")
 public class Address extends BaseEntity {
 
   private String street;
@@ -27,7 +26,7 @@ public class Address extends BaseEntity {
   private String cep;
 
   @ToString.Exclude
-  @ManyToOne(cascade = CascadeType.PERSIST)
+  @ManyToOne
   @JoinColumn(name = "city_id")
   private City city;
 

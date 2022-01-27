@@ -11,15 +11,17 @@ import org.springframework.data.domain.Pageable;
 
 public interface CustomerService extends GenericService<Customer> {
 
-  public Customer fromDto(NewCustomerDto dto);
+  Customer fromDto(NewCustomerDto dto);
 
-  public Page<CustomerDto> findAllWithPagination(Pageable pageable);
+  Page<CustomerDto> findAllWithPagination(Pageable pageable);
 
-  public List<Address> findByAddressesWithCustomerId(Long id);
+  List<Address> findByAddressesWithCustomerId(Long id);
 
-  public NewCustomerDto insertAddress(Long id, AddressDto addressDto);
+  Customer insertAddress(Long id, AddressDto addressDto);
 
-  public CustomerDto findByDocument(String text);
+  CustomerDto findByDocument(String text);
 
-  public void updateCustomer(CustomerDto customerDto);
+  void updateCustomer(CustomerDto customerDto);
+
+  Customer save(NewCustomerDto dto);
 }

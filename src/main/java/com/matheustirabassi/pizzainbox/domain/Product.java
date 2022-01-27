@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -22,10 +23,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @Data
 @Entity
-@Table(name = "tb_product")
+@Table(name = "product")
 public class Product extends BaseEntity {
 
   private String name;
@@ -33,7 +34,7 @@ public class Product extends BaseEntity {
   private String description;
 
   @JsonIgnore
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.PERSIST)
   @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "product_id"),
       inverseJoinColumns = @JoinColumn(name = "category_id"))
   private List<Category> categories;
