@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
-@RequestMapping(value = "/clientes")
+@RequestMapping(value = "/customers")
 public class CustomerController {
 
   @Autowired
@@ -66,7 +66,7 @@ public class CustomerController {
   }
 
 
-  @PostMapping(value = "{id}/enderecos")
+  @PostMapping(value = "{id}/addresses")
   public ResponseEntity<?> insertEndereco(@PathVariable Long id,
       @RequestBody AddressDto addressDto) {
     Customer obj = service.insertAddress(id, addressDto);
@@ -75,7 +75,7 @@ public class CustomerController {
     return ResponseEntity.created(uri).build();
   }
 
-  @GetMapping(value = "{id}/enderecos")
+  @GetMapping(value = "{id}/addresses")
   public ResponseEntity<List<AddressDto>> findAllEnderecos(@PathVariable Long id)
       throws ObjectNotFoundException {
     List<Address> addresses = service.findByAddressesWithCustomerId(id);
