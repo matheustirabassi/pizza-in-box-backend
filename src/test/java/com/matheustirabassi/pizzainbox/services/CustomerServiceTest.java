@@ -1,16 +1,24 @@
 package com.matheustirabassi.pizzainbox.services;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
+import com.matheustirabassi.pizzainbox.dao.CityRepository;
 import com.matheustirabassi.pizzainbox.dao.CustomerRepository;
 import com.matheustirabassi.pizzainbox.dao.LoginRepository;
+import com.matheustirabassi.pizzainbox.dao.StateRepository;
+import com.matheustirabassi.pizzainbox.domain.City;
+import com.matheustirabassi.pizzainbox.domain.State;
 import com.matheustirabassi.pizzainbox.dto.CustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewLoginDto;
 import com.matheustirabassi.pizzainbox.services.exceptions.ServiceException;
 import com.matheustirabassi.pizzainbox.services.impl.CustomerServiceImpl;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,6 +33,12 @@ class CustomerServiceTest {
 
   @Mock
   LoginRepository loginRepository;
+
+  @Mock
+  StateRepository stateRepository;
+
+  @Mock
+  CityRepository cityRepository;
 
   @InjectMocks
   CustomerServiceImpl customerService;
@@ -97,6 +111,38 @@ class CustomerServiceTest {
     String expectedMessage = "Esse email já existe!";
     assertTrue(
         exception.getMessage().contains(expectedMessage));
+  }
+
+  // endregion
+
+  // region findAllStates tests
+
+  @Test
+  @DisplayName("Busca todos os estados e retorna a lista")
+  public void findAllStatesTest_AllValid_Sucess() {
+    State state1 = new State();
+    state1.setName("SP");
+    State state2 = new State();
+    state2.setName("RJ");
+    List<State> expectedStates = Arrays.asList(state1, state2);
+    when(stateRepository.findAll()).thenReturn(expectedStates);
+    assertEquals(expectedStates, customerService.findAllStates());
+  }
+  // endregion
+
+  // region findCityByStateId
+  @Test
+  @DisplayName("Busca todas as cidades pelo id do estado")
+  public void findCityByStateId() {
+    City city = new City();
+    city.setName("Cerquilho");
+    State state = new State();
+    city.setState(state);
+    state.setName("SP");
+    state.setId(1L);
+    List<City> expectedCities = Collections.singletonList(city);
+    when(cityRepository.findAllByStateId(state.getId())).thenReturn(expectedCities);
+    assertEquals(expectedCities, customerService.findAllByStateId(state.getId()));
   }
 
   // endregion

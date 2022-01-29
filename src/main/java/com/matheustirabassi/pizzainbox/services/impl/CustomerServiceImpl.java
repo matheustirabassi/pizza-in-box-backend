@@ -1,8 +1,10 @@
 package com.matheustirabassi.pizzainbox.services.impl;
 
+import com.matheustirabassi.pizzainbox.dao.CityRepository;
 import com.matheustirabassi.pizzainbox.dao.CustomerRepository;
 import com.matheustirabassi.pizzainbox.dao.GenericRepository;
 import com.matheustirabassi.pizzainbox.dao.LoginRepository;
+import com.matheustirabassi.pizzainbox.dao.StateRepository;
 import com.matheustirabassi.pizzainbox.domain.Address;
 import com.matheustirabassi.pizzainbox.domain.City;
 import com.matheustirabassi.pizzainbox.domain.Customer;
@@ -32,6 +34,12 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
 
   @Autowired
   private LoginRepository loginRepository;
+
+  @Autowired
+  private StateRepository stateRepository;
+
+  @Autowired
+  private CityRepository cityRepository;
 
   /**
    * Faz a busca por nome.
@@ -160,6 +168,14 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
       throw new ServiceException("Esse nome de usuário já existe!");
     }
     return saveOrUpdate(fromDto(dto));
+  }
+
+  public List<State> findAllStates() {
+  return stateRepository.findAll();
+  }
+
+  public List<City> findAllByStateId(Long id) {
+    return cityRepository.findAllByStateId(id);
   }
 
 }
