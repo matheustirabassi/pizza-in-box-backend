@@ -1,15 +1,19 @@
 package com.matheustirabassi.pizzainbox.services.impl;
 
+import com.matheustirabassi.pizzainbox.dao.CityRepository;
 import com.matheustirabassi.pizzainbox.dao.CustomerRepository;
 import com.matheustirabassi.pizzainbox.dao.GenericRepository;
 import com.matheustirabassi.pizzainbox.dao.LoginRepository;
+import com.matheustirabassi.pizzainbox.dao.StateRepository;
 import com.matheustirabassi.pizzainbox.domain.Address;
 import com.matheustirabassi.pizzainbox.domain.City;
 import com.matheustirabassi.pizzainbox.domain.Customer;
 import com.matheustirabassi.pizzainbox.domain.State;
 import com.matheustirabassi.pizzainbox.dto.AddressDto;
+import com.matheustirabassi.pizzainbox.dto.CityDto;
 import com.matheustirabassi.pizzainbox.dto.CustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
+import com.matheustirabassi.pizzainbox.dto.StateDto;
 import com.matheustirabassi.pizzainbox.services.CustomerService;
 import com.matheustirabassi.pizzainbox.services.exceptions.ObjectNotFoundException;
 import com.matheustirabassi.pizzainbox.services.exceptions.ServiceException;
@@ -32,6 +36,12 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
 
   @Autowired
   private LoginRepository loginRepository;
+
+  @Autowired
+  private StateRepository stateRepository;
+
+  @Autowired
+  private CityRepository cityRepository;
 
   /**
    * Faz a busca por nome.
@@ -160,6 +170,16 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
       throw new ServiceException("Esse nome de usuário já existe!");
     }
     return saveOrUpdate(fromDto(dto));
+  }
+
+  @Transactional(readOnly = true)
+  public List<StateDto> findAllStates() {
+  return StateDto.convertList(stateRepository.findAll());
+  }
+
+  @Transactional(readOnly = true)
+  public List<CityDto> findAllByStateId(Long id) {
+    return CityDto.convertList(cityRepository.findAllByStateId(id));
   }
 
 }
