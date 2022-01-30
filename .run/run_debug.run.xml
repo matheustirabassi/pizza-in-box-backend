@@ -27,7 +27,6 @@
             <list>
               <option value="spring-boot:run" />
               <option value="-Dmaven.test.skip=true" />
-              <option value="-Dspring-boot.run.fork=false" />
             </list>
           </option>
           <option name="pomFileName" />
