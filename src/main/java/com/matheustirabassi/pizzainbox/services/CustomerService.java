@@ -5,8 +5,10 @@ import com.matheustirabassi.pizzainbox.domain.City;
 import com.matheustirabassi.pizzainbox.domain.Customer;
 import com.matheustirabassi.pizzainbox.domain.State;
 import com.matheustirabassi.pizzainbox.dto.AddressDto;
+import com.matheustirabassi.pizzainbox.dto.CityDto;
 import com.matheustirabassi.pizzainbox.dto.CustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
+import com.matheustirabassi.pizzainbox.dto.StateDto;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +29,7 @@ public interface CustomerService extends GenericService<Customer> {
 
   Customer save(NewCustomerDto dto);
 
-  List<State> findAllStates();
+  List<StateDto> findAllStates();
 
-  List<City> findAllByStateId(Long id);
+  List<CityDto> findAllByStateId(Long id);
 }

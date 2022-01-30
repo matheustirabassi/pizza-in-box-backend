@@ -3,8 +3,10 @@ package com.matheustirabassi.pizzainbox.controllers;
 import com.matheustirabassi.pizzainbox.domain.Address;
 import com.matheustirabassi.pizzainbox.domain.Customer;
 import com.matheustirabassi.pizzainbox.dto.AddressDto;
+import com.matheustirabassi.pizzainbox.dto.CityDto;
 import com.matheustirabassi.pizzainbox.dto.CustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
+import com.matheustirabassi.pizzainbox.dto.StateDto;
 import com.matheustirabassi.pizzainbox.services.CustomerService;
 import com.matheustirabassi.pizzainbox.services.exceptions.ObjectNotFoundException;
 import java.net.URI;
@@ -110,5 +112,15 @@ public class CustomerController {
   public ResponseEntity<Void> updateCustomer(@RequestBody CustomerDto customerDto) {
     service.updateCustomer(customerDto);
     return ResponseEntity.noContent().build();
+  }
+
+  @GetMapping(value = "/states")
+  public ResponseEntity<List<StateDto>> getStates() {
+    return ResponseEntity.ok(service.findAllStates());
+  }
+
+  @GetMapping(value = "/cities")
+  public ResponseEntity<List<CityDto>> getCities(@RequestParam Long stateId) {
+    return ResponseEntity.ok(service.findAllByStateId(stateId));
   }
 }

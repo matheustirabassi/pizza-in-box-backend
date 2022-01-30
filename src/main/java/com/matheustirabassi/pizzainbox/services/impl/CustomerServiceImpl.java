@@ -10,8 +10,10 @@ import com.matheustirabassi.pizzainbox.domain.City;
 import com.matheustirabassi.pizzainbox.domain.Customer;
 import com.matheustirabassi.pizzainbox.domain.State;
 import com.matheustirabassi.pizzainbox.dto.AddressDto;
+import com.matheustirabassi.pizzainbox.dto.CityDto;
 import com.matheustirabassi.pizzainbox.dto.CustomerDto;
 import com.matheustirabassi.pizzainbox.dto.NewCustomerDto;
+import com.matheustirabassi.pizzainbox.dto.StateDto;
 import com.matheustirabassi.pizzainbox.services.CustomerService;
 import com.matheustirabassi.pizzainbox.services.exceptions.ObjectNotFoundException;
 import com.matheustirabassi.pizzainbox.services.exceptions.ServiceException;
@@ -170,12 +172,14 @@ public class CustomerServiceImpl extends GenericServiceImpl<Customer> implements
     return saveOrUpdate(fromDto(dto));
   }
 
-  public List<State> findAllStates() {
-  return stateRepository.findAll();
+  @Transactional(readOnly = true)
+  public List<StateDto> findAllStates() {
+  return StateDto.convertList(stateRepository.findAll());
   }
 
-  public List<City> findAllByStateId(Long id) {
-    return cityRepository.findAllByStateId(id);
+  @Transactional(readOnly = true)
+  public List<CityDto> findAllByStateId(Long id) {
+    return CityDto.convertList(cityRepository.findAllByStateId(id));
   }
 
 }
